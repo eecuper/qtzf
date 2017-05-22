@@ -1,0 +1,27 @@
+<extend name="Base/tpl" />
+
+<block name="title">站点配置</block>
+
+<block name="css">
+<style>
+	p{width:90%;padding:10px 20px;border:solid 0px red;}
+	p span{display:inline-block;width:80px;padding-right:10px;text-align: right;}
+	p input{height:25px;width:220px;}
+	.save , .reset {width:80px;height:25px;line-height: 25px;border:0px;}
+	.radio{border:solid 1px #ccc;width:40px;}
+	select{width:220px;}
+	em{color: red;}
+	p .msg,.msg2{color:red;font-size:12px;display: inline-block;width:180px;float: right;text-align: left;border:solid 0px green;}
+	</style>
+</style>
+</block>	
+
+<block name="body">
+ 
+<p><span>站点名称</span><input type="text" name="web_name" value="{$config['web_name']}"/></p>
+<p><span>域名地址</span><input type="text" name="url" value="{$config['url']}"/></p>
+<p><span>banner</span><input type="text" name="img" value="{$config['img']}"/></p>
+<p><span>站点主题</span><select name="theme"><option value="default">默认</option></select></p>
+<p><span></span><input type="button" value="保存" class="save"/> <input class="reset" type="reset" value="重置"/></p>
+</block> 
+  

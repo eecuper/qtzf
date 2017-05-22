@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="gb2312">
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+    <title>{$newsInfo['title']}</title>
+</head>
+<body style="background-color:#fff;">
+<div class="nav hide">
+    <span class="left nav_span" onclick="history.back();"><a href="javascript:;">返回</a></span>
+    <span class="nav_title">{$newsInfo['title']}</span>
+    <span class="right nav_span" onclick="location.href='{:U('index/index')}';"><a href="javascript:;">首页</a></span>
+</div>
+<div id="listhome4">
+<div class="list">
+<div class="oldlist">
+<if condition="$newsInfo eq null">
+文章到期或内容丢失
+<else/>
+<div class="con_title"><h6>{$newsInfo['title']}</h6></div>
+<p class="con_publish">{$newsInfo['publish']}</p>
+<div class="con_con"><?php echo $newsInfo['content']; ?></div>
+<p class="con_auth">{$newsInfo['auth']}</a></p>
+</if>
+</div>
+</div>
+</div>
+ 
+ 
+<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+<script>
+     
+ 
+    $(function(){
+        $("img").each(function(index, el) {
+        //http://www.qtzfcg.gov.cn/zxdt/201610/W020161018356667680134.jpg
+            var e = $(this),
+                d = "{$newsInfo['source']}",
+                src = e.attr('src');
+            //e.attr('src',d+src);
+            e.attr('width','100%');
+            e.css('width','100%');
+        });
+ 
+        //多媒体
+        $("embed").css('width','100%');
+ 
+        //所有字体调整一致
+        $(".con_con").find('span').css('font-size','0.9em');
+        $(".con_con").find('span').css('color','#535353');
+        //所有表格宽度调整为100%
+        $("table").each(function(){
+            var e = $(this);  
+            e.attr({
+                cellPadding:'0',
+                cellSpacing:'0'
+            });          
+            e.css({
+                padding:'0px',
+                width:'100%',
+                background:'#fff',
+                border:'solid 1px #535353',
+                borderRight:'0px',
+                borderBottom:'0px'
+            });
+            e.find('td').css({
+                padding: '0px',
+                height:'100%',
+                border:'solid 1px #535353',
+                borderTop:'0px',
+                borderLeft:'0px',
+                fontSize:'0.4em'
+            });
+        });
+    });
+</script>
+</body>
+</html>

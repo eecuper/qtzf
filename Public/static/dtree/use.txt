@@ -1,0 +1,10 @@
+<script type="text/javascript">
+			d = new dTree('d');
+			d.add(10,-1,"²Ëµ¥","javascript:void(-1);","²Ëµ¥","","","",false);
+			<?php 
+				foreach ($menuList as $key => $m) {
+					echo "d.add(".$m['MENU_ID'].",".$m['MENU_PARENT_ID'].",\"".$m['MENU_NAME']."\",\"".$m['MENU_URL']."\",\"".$m['MENU_NAME']."\",\"\",\"\",\"\",false);"; 
+				}
+			?>
+			document.write(d);
+		</script>

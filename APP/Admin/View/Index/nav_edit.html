@@ -1,0 +1,151 @@
+<html>
+	<head>
+	<style>
+	p{width:90%;padding:0px 20px;border:solid 0px red;}
+	p span{display:inline-block;width:65px;padding-right:10px;text-align: right;}
+	p input{height:25px;width:250px;}
+	.save, .reset,.btn {width:80px;height:25px;line-height: 25px;border:0px;}
+	.radio{border:solid 1px #ccc;width:40px;}
+	.hidden{display: none;}
+	select{width:220px;}
+	em{color: red;}
+	p .msg,.msg2{color:red;font-size:12px;display: inline-block;width:180px;text-align: left;border:solid 0px green;}
+	</style>
+	</head>
+	<body>
+	<form name="theForm" action="" method="post">
+	<table width="100%">
+	<tr>
+	<td width="400px" valign="top" style="border-right:solid 1px #ccc;">
+	<input type="hidden" name="id" value="{$nav['id']}" />
+	<?php $flag=0;?>
+	<p><span>上级导航</span><select id="nav_lvl" name="pid">
+			<option value="0" para=0>顶级导航</option>
+			<volist name="navs" id="n" key="k">				
+				<?php 
+					if($n['id']!=$nav['id']){
+						$h='<option ';
+						$h.=' value="'.$n['id'].'" para="'.$n['lvl'].'"';
+						if($n['id']==$nav['pid'] || $n['id']==$parentId){
+							$h.=' selected="selected"';
+						}
+						$h.='>';
+						$h.=str_repeat('-', (intval($n['lvl'])-1)*2).$n['name'];
+						$h.='</option>';
+						echo $h;
+					}
+				?>
+			</volist>
+		</select>
+	</p>
+	<p><span>层级</span><input readonly="readonly" type="text" name="lvl" value="<?php 
+		echo intval($nav['lvl']); 
+		?>" /><em>*</em><span class="msg"></span></p>
+	<p><span>名称</span><input type="text" name="name" value="{$nav['name']}" /><em>*</em><span class="msg"></span></p>
+	<p><span>类型</span><select name="url_type">
+		<option value="link"  <?php echo $nav['url_type']=='link'?'selected="selected"':''; ?>>爬虫链接</option>
+		<option value="local" <?php echo $nav['url_type']=='local'?'selected="selected"':''; ?>>站点链接</option>
+		<option value="sub" <?php echo $nav['url_type']=='sub'?'selected="selected"':''; ?>>层级链接</option>
+		<option value="content" <?php echo $nav['url_type']=='content'?'selected="selected"':''; ?>>站点文章</option>
+		<option value="content_list" <?php echo $nav['url_type']=='content_list'?'selected="selected"':''; ?>>站点文章列表</option>
+	</select><span class="msg"></span></p>
+	<p><span>文章编号</span><input type="text" name="cid" value="{$nav['cid']}" /><em></em></p>
+	<p><span>链接</span><input type="text" name="url" value="{$nav['url']}" /><em>*</em><span class="msg">必须加上http://</span></p>
+	<p><span>图标</span><input type="text" name="icon" class="upload" id="icon" readonly="readonly" value="{$nav['icon']}"/>
+		</p>
+	<p><span>排序</span><input type="text" name="ord" value="{$nav['ord']}"/></p>
+	<p class="hidden"><span>排序</span><select name="ord2">
+		<?php 
+			for($i=1 ; $i<=20 ; $i++){
+				if($nav['ord']==$i){
+					echo "<option value=".$i." selected>第".$i."个</option>";
+				}else{
+					echo "<option value=".$i." >第".$i."个</option>";
+				}
+			}
+		?>
+	</select></p>
+	<p><span></span>正常<input class="radio" type="radio" name="status" value="1" checked="checked" />
+						禁用<input class="radio" type="radio" name="status" value="0" /></p>
+	<p><span></span><input type="button" value="保存" class="save"/> <input class="reset" type="reset" value="重置"/>
+
+	<input class="btn" onclick="location.href='{:U('index/nav_list')}';" type="button" value="返回列表"/>
+	</p>
+	</td>
+	<td>
+	<iframe src="{:U('pro_query')}" width="100%" height="500px" frameborder="no"></iframe>
+	</td>
+	</tr>
+	</table>
+	</form>
+	</body>
+
+	<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/stringUtil.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/util.js"></script>
+
+	<script type="text/javascript">
+
+	$(function(){
+		$("input[name=lvl]").val(parseInt($("#nav_lvl").find('option:selected').attr('para'))+1);
+
+		$(".upload").click(function(){	 
+			openDialog('http://'+window.location.host+'/qtzf/uploadFile.php?id=icon',400,200);
+		});
+	});
+
+	$("#nav_lvl").change(function(){
+		var e= $(this);
+		$("input[name=lvl]").val(parseInt(e.find('option:selected').attr('para'))+1);
+	});
+
+	$(".save").click(function(){
+		console.info('flag');
+		var e = $(this);
+		var flag = true;
+		var name = $("input[name=name]").val(),
+			url  = $("input[name=url]").val();
+
+		if(name.isEmpty()){
+			$("input[name=name]").siblings('.msg').html('名称必须填写');
+			flag=false;
+		}
+
+		if(url.isEmpty()){
+			$("input[name=url]").siblings('.msg').html('链接必须填写');
+			flag=false;
+		}
+		if(flag==true){
+			layer.load(2,{shade:[0.5,'#ccc']});
+			$.ajax({
+			url:"{:U('nav_edit')}",
+			type:'post',
+			datatype:'json',
+			data:$("form:eq(0)").serialize(),
+			success:function(re){
+				if(re.flag){
+					layer.msg('保存成功');	
+					setTimeout(function(){
+						layer.closeAll();
+					},1000);				 
+				}else{
+					layer.msg('保存失败');
+					setTimeout(function(){
+						layer.closeAll();
+					},1000);
+				}
+			},
+			error:function(){
+				layer.msg('保存异常');
+				setTimeout(function(){
+						layer.closeAll();
+					},1000);
+			}
+		});
+		}
+	});
+
+
+	</script>
+</html>

@@ -1,0 +1,14 @@
+--文本框数据填写限制和更换
+onafterpaste="this.value=this.value.replace(/\D/g,'')" 
+
+onkeyup="this.value=this.value.replace(/\D/g,'')"
+
+
+.htaccess
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ admin.php/$1 [QSA,PT,L]
+</IfModule>

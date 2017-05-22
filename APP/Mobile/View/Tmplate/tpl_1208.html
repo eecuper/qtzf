@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=0.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
+  <link rel="stylesheet" type="text/css" href="__JS__/style.css" /> 
+  <title>{$config['web_name']}</title> 
+ <block name="css"></block>
+ </head> 
+ <body class=""> 
+  <div class="container" style="left: 400px; width: 640px; height: 742px;"> 
+   <div class="load amn3">
+    <div class="loader amn"></div>
+   </div> 
+   <div class="header amn3">
+    <a href="javascript:;" class="icon menuback"></a>
+    <b>{$nav_name}</b>
+    <a href="{:U('index/index')}" class="icon homeback lda"></a>
+   </div> 
+   <div class="content amn3" style="height: 696px;">
+    <div class="content-area honor"> 
+      <block name="body"></block>      
+    </div>
+   </div> 
+
+   <div class="menu amn3 pull"> 
+   	<volist name="navs" id="nav" key="k">
+	<?php 
+		$link = "";
+		if($nav['url_type']=='link'){
+			$link = U('index/newsList')."?nav_name=".$nav['name']."&url=".urlencode($nav['url']);
+		}else if($nav['url_type']=='local'){
+			$link = $nav['url']."?nav_name=".$nav['name'];
+		}else{
+			$link = U('index/sub_link?nav_name='.$nav['name'].'&pid='.$nav['id']);
+		}
+	?>
+	<a href="javascript:;" class="one one0 amn3 ones oney0"><span></span><h2>{$nav['name']}</h2></a> 
+    <ul class="two two0 amn3">
+     <li><a href="http://www.cnvp.com.cn/html/wap/guanyuwomen/gongsijianjie" class="lda"><b class="icon"></b><span>公司简介</span></a></li>
+     <li><a href="http://www.cnvp.com.cn/html/wap/guanyuwomen/yewufanwei" class="lda"><b class="icon"></b><span>业务范围</span></a></li>
+     <li><a href="http://www.cnvp.com.cn/html/wap/guanyuwomen/lingdaoguanhuai" class="lda"><b class="icon"></b><span>领导关怀</span></a></li>
+     <li><a href="http://www.cnvp.com.cn/html/wap/guanyuwomen/qiyerongyu" class="lda"><b class="icon"></b><span>企业荣誉</span></a></li>
+     <li><a href="http://www.cnvp.com.cn/html/wap/guanyuwomen/lianxiwomen" class="lda"><b class="icon"></b><span>联系我们</span></a></li>
+    </ul> 
+	</volist>
+    <a href="http://www.cnvp.com.cn/html/wap/woyaoyingpin" class="one one2 lda amn3 oney0"><span></span><h1>JOIN US</h1><h2>我要应聘</h2></a> 
+    <a href="http://www.cnvp.com.cn/html/wap/qiyexinwen" class="one one3 lda amn3 oney0"><span></span><h1>News</h1><h2>企业新闻</h2></a> 
+    <h4><img src="__PUBLIC__/images/logo.png" width="155px"/></h4> 
+   </div> 
+   <script type="application/javascript">
+	var upid,tid,menuid;
+	topid=parseInt(30);
+	tid=parseInt(36);
+	topid=topid==0?tid:topid;
+	if(topid==30)
+		menuid=0;
+	else if(topid==31)
+		menuid=1;
+	else if(topid==32)
+		menuid=2;
+	else if(topid==41)
+		menuid=3;
+	
+</script> 
+   <div class="mask amn3"></div> 
+  </div> 
+  <script language="javascript" src="__JS__/zepto.js"></script> 
+  <script language="javascript" src="__JS__/fx.js"></script> 
+  <script language="javascript" src="__JS__/cnvpgmu.js"></script> 
+  <script language="javascript" src="__JS__/cnvpwap.js"></script> 
+
+  <block name="js"></block>
+ </body>
+</html>

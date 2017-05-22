@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="gb2312">
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf.css"/>
+	<title>{$nav_name}</title>
+
+</head>
+<body>
+<div class="wrap">
+<div class="head hide"><h2>{:C('WEB_NAME')}</h2></div>
+<a href="{:U('Index/index')}">
+	<img title="{:C('WEB_NAME')}" alt="{:C('WEB_NAME')}" src="__PUBLIC__/images/qt_logo.png" width="100%"/>
+</a>
+<div id="menu_tab">	
+	<volist name="navs" id="nav" key="k">
+	<div class="menu_title">
+		<fieldset>
+			<legend>{$nav['name']}</legend>
+		</fieldset>
+	</div>	 
+	<div class="news_div" url="?nav_name={$nav['name']}&url=<?php echo urlencode($nav['url'])?>">
+		数据加载中..
+	</div>
+	</volist>
+ 
+<div class="foot"></div>	
+</div>
+
+<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+<script>
+
+$(".news_div").click(function(){
+	loadNews($(this));
+});
+
+$(function(){
+	$(".news_div").each(function(index, el) {
+		loadNews($(this));
+	});
+});
+
+
+loadNews = function(obj){
+	var e = obj,
+		url = "{:U('index/newsList_json')}"+e.attr('url'),	 
+		news_div = e;		 
+		$.ajax({
+		type:'get',
+		dataType:'json',
+		url:url,
+		data:{rowSize:10},
+		success:function(re){
+			var html = "<ul  class='newsList_tab'>";
+			if(re!=null && re.length>0){
+				$.each(re,function(index, el) {
+					html+="<li><a href=\"{:U('index/newsInfo')}?url="+el['url']+"\">"+el['title']+"</a></li>";
+				});
+			}else{
+				html+="<li>no data</li>";
+			}
+			html+="<li><a href='{:U('index/newsList')}"+e.attr('url')+"'>查看更多>></a></li>";
+			html+= "</ul>";
+			news_div.children('ul').hide();
+			news_div.html(html);
+		},
+		error:function(){
+		}
+	});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="gb2312">
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+    <style type="text/css">
+    #oldlist{padding:10px 10px 10px 10px;}
+    #oldlist p{display:block;height:30px;padding:10px 0px;}
+    #oldlist p span{width:20%;padding-right:10px;}
+    input[type=text] ,input[type=date],select{height:40px;line-height: 40px;border-radius: 2px;width:100%;border:solid 1px #ccc;padding-left:15px;background: #fff;}
+    #oldlist p input[type=text]{}
+    .a_btn{display:block;height:30px;line-height:30px;background:rgb(160,213,103);border-radius: 2px;color: #fff;text-decoration: none;width:106%;margin:0 auto;padding:8px 0px;
+        text-align: center;font-weight: bold;}
+    .save_disable{background:#ccc;color: grey;cursor:not-allowed;}
+    .errmsg{font-size: 12px;color: red;text-align: center;}
+
+    input[type="date"]:before{
+        content: attr(placeholder);
+        color:grey;
+    }
+
+    </style>
+    <title>预约</title>
+</head>
+<body>
+<div class="nav hide">
+    <span class="left nav_span" onclick="history.back();">返回</span>
+    <span class="nav_title">预定预约</span>
+    <span class="right nav_span" onclick="location.href='{:U('index/index')}';">首页</span>
+</div>
+<div id="listhome4" style="padding-bottom:10px;">
+<div class="list">
+<div id="oldlist">
+<form name="theForm" action="{:U('index/yue_add')}" method="post">
+<p><input placeholder="请填写公司名称" type="text" name="comp_name" /></p>
+<p><input placeholder="请填写项目名称" type="text" name="user_name" /></p>
+<p><input placeholder="请填写预约账号" type="text" name="bill_id" /></p>
+<p><input placeholder="请选择日期" id="date" type="date" name="yue_date" /></p>
+<p><select name="ap" id="" style="width:106%;">
+    <option value="am">上午</option>
+    <option value="pm">下午</option>
+</select></p>
+<p class="room_select"><select name="room" style="width:106%;">
+    <option value="">无需开标室</option>
+    <option value="开标大厅">开标大厅</option>
+    <option value="开标室二">开标室二</option>
+    <option value="开标室三">开标室三</option>
+</select></p>
+<p class="room_select"><select name="room2" style="width:106%;">   
+    <option value="">无需评标室</option>
+    <option value="评标室一">评标室一</option>
+    <option value="评标室二">评标室二</option>
+    <option value="评标室三">评标室三</option>
+</select></p>
+<p><input type="text" placeholder="请填写具体时间段等备注说明" name="remark" /></p>
+<p style="text-align:center;">
+ 
+    <div class="errmsg"></div>
+    <a href="javascript:;" class="a_btn save_btn save">提交预约</a>
+    <br>
+    <a href="{:U('index/yue')}" class="a_btn save_disable" style="background:rgb(221,81,69);color:#fff;">预约情况</a>
+</p>  
+</form>
+</div>
+
+<ul id="history"></ul>
+
+</div>
+
+
+ 
+
+</div>
+
+ 
+<script src="__STATIC__/jquery-1.8.3.min.js"></script>
+<script src="__PUBLIC__/stringUtil.js"></script>
+
+
+<script type="text/javascript">
+
+    var o = document.getElementById('date');
+    o.onfocus = function(){
+        this.removeAttribute('placeholder');
+    };
+    o.onblur = function(){
+        if(this.value == '') this.setAttribute('placeholder','请选择日期');
+    };
+
+
+    var flag = 1;
+     
+    $(function(){
+
+        $("input[name=bill_id]").blur(function(){
+            var e = $(this).val();            
+            if(!(e.isEmpty())){
+                $("#history").html('');
+                $.ajax({
+                    type:'post',
+                    url:"{:U('yue_my')}",
+                    data:{bill_id:e},
+                    dataType:'json',
+                    success:function(re){                        
+                        $.each(re,function(index,el){
+                            var html =  '       <li class="newsmore">';                              
+                                html += '            <div class="olditem">';
+                                html += '            <div class="title">';
+                                html += '                <span class="left">&nbsp;&nbsp;&nbsp;'+el.user_name+'&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;'+el.yue_date+'&nbsp;&nbsp;&nbsp;'+el.room+'</span>';
+                                //html += '                <em class="right quxiao" style="color:#ccc;" para="'+el.id+'">取消</em>';
+                                html += '            </div>';
+                                html += '            </div>';                              
+                                html += '        </li>';
+                            $("#history").append(html);
+                        });
+                    },
+                    error:function(){}
+                });
+            }
+        });
+
+    $(".quxiao").live('click',function(){
+        var e = $(this),
+            para = e.attr('para');
+        $.ajax({
+            type:'post',
+            url:"{:U('yue_my_del')}",
+            data:{id:para},
+            dataType:'json',
+            success:function(re){
+                if(re.flag){
+                    alert('取消成功');
+                    e.parent().parent().remove();      
+                }
+            },
+            error:function(){}
+        });
+    });
+
+        // $("#room_select").change(function(){
+        //     var e = $(this),
+        //         val = e.val();
+        //     room_select(val);
+        // });
+
+        $(".save").live('click', function(event) {
+            var valid = true;
+            var is_dest = true;
+            var is_yue  = false;
+ 
+            $(".errmsg").html('');
+            var name=$("input[name=user_name]").val(),
+                bill=$("input[name=bill_id]").val(),
+                comp_name=$("input[name=comp_name]").val(),
+                date=$("input[name=yue_date]").val(),
+                e = $(this);
+                if(name.isEmpty()){
+                    $("input[name=user_name]").val('').attr('placeholder','项目名必须填写');
+                    valid=false;
+                }
+                if(name.getByteLength()>500){
+                    $("input[name=user_name]").val('').attr('placeholder','项目名填写过长');
+                    valid=false;
+                }
+                if(bill.isEmpty()){
+                    $("input[name=bill_id]").val('').attr('placeholder','预约账号必须填写');
+                    valid=false;
+                }
+ 
+                // if(!bill.isEmpty() && !bill.isMobilePhone()){
+                //     $("input[name=bill_id]").val('').attr('placeholder','手机号格式错误');
+                //     valid=false;
+                // }
+
+                if(comp_name.isEmpty()){
+                    $("input[name=comp_name]").val('').attr('placeholder','公司名必须填写');
+                    valid=false;
+                }
+                 
+                if(date.isEmpty()){
+                    $("input[name=yue_date]").val('').attr('placeholder','日期必须选择');
+                    valid=false;
+                }
+                if(is_yue){
+                    $('.errmsg').html(date+' 日您已经申请预约');
+                    valid=false;
+                }
+                if(valid==true && is_dest==true ){
+                    e.addClass('save_disable').removeClass('save').text('正在提交预约');
+                    setTimeout(addSave,5000);
+                    $.ajax({
+                        url:"{:U('index/yue_add')}",
+                        type:'post',
+                        datatype:'json',
+                        data:$("form:eq(0)").serialize(),
+                        success:function(re){
+                            if(re.flag){
+                                alert(re.msg);
+                                location.href="{:U('index/yue')}";
+                            }else{
+                                $('.errmsg').html(re.msg);
+                            }
+                        },
+                        error:function(){
+                            $(".errmsg").html('预约失败');
+                            addSave();
+                        }
+                    });
+                }
+        });
+    });
+ 
+    addSave = function(){
+        $(".save_btn").addClass('save').removeClass('save_disable').text('提交预约');
+    }
+
+    // room_select = function(val){
+    //     $(".room_select").hide();
+    //     $(".room_select").find('select').attr('name','');
+    //     $(".room_select").eq(val).show();
+    //     $(".room_select").eq(val).find('select').attr('name','room');
+    // }
+</script>
+</body>
+</html

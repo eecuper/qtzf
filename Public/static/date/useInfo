@@ -1,0 +1,5 @@
+页面导入js文件 
+<script src="<%=request.getContextPath()%>/date/WdatePicker.js" language="javascript" type="text/javascript"></script>
+
+时间空间设置
+<input  class="Wdate" type="text" size="12" onClick="WdatePicker()">    

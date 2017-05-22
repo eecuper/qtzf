@@ -1,0 +1,33 @@
+<extend name="Base/tpl" />
+
+<block name="title">首页</block>
+
+<block name="css">
+<style>
+.index{width:650px;margin:0 auto;padding:10px;background:#ccc;margin-top:20px;}
+.index_bg{}
+.index_mobile{width:640px;height:600px;overflow: auto;margin:0 auto;}
+#iframe-wrap{
+	height: 100%;
+    overflow: visible;
+    position: relative;
+    top: 5px;
+    z-index: 50;
+}
+/*background: rgba(0, 0, 0, 0) url("__PUBLIC__/images/mobile.png") no-repeat scroll 0 -2217px;*/
+.mobile-width-2 {
+    background: rgba(0, 0, 0, 0) url("__PUBLIC__/images/mobile.png") no-repeat scroll 0 -2217px;
+    height: 417px !important;
+    margin: 00px auto 0;
+    padding: 125px 25px 159px;
+    width: 337px;
+}
+</style>
+</block>
+<block name="body">
+
+<div id="iframe-wrap" class="mobile-width-2 hide">
+<iframe id="iframe" src="{:U('Mobile/index/index')}" style="overflow-x:hidden;" width="100%" height="420px" frameborder="0"></iframe>
+</div>
+ 
+</block>

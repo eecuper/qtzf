@@ -1,0 +1,70 @@
+<extend name="Tmplate/tpl" />
+<block name="css">
+<link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+<link rel="stylesheet" href="__CSS__/qtzf.css"/>
+<link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+<style type="text/css">
+    .news_date{padding-left:15px;line-height:80%;color:#ccc;}
+</style>
+</block>
+ 
+<block name="body"> 
+<div id="listhome4">
+<div class="list">
+<div id="oldlist">
+    <ul>
+    <notempty name="news">
+        <volist name="news" id="new" key="k">
+            <if condition="$k elt 20" >
+                <li class="newsmore" id="{$k}"><a class="lda" href="{:U('index/newsInfo')}?url={$new['url']|urlencode}">
+                <div class="olditem">
+                <div class="title"><img src="http://www.qingtian.gov.cn/images/qt2013_6.gif"> {$new['title']}
+                    <div class="news_date">日期:{$new['date']}</div>
+                </div> 
+                </div>
+                </a></li>
+            <else/>
+                <li class="newsmore" id="{$k}" style="display:none;"><a class="lda" href="{:U('index/newsInfo')}?url={$new['url']|urlencode}">
+                <div class="olditem">
+                <div class="title"><img src="http://www.qingtian.gov.cn/images/qt2013_6.gif"> {$new['title']}
+                    <div class="news_date">日期:{$new['date']}</div>
+                </div> 
+                </div>
+                </a></li>
+            </if>
+        </volist>
+    <else/>
+        <li class="newsmore"><a href="javascript:;">
+        <div class="olditem">
+        <div class="title">未找到任何数据</div> 
+        </div>
+        </a></li>
+    </notempty>   
+    </ul>
+</div>
+</div>
+</div>
+<div class="load_more1" para=20>加载更多>></div>
+</block>
+ 
+ 
+<block name="js">
+<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+<script>
+$(".load_more1").click(function(){
+ 
+    var e = $(this),
+        para = e.attr('para')
+        tmp  = parseInt(para)+20,
+        count= "{$news|count}";
+        for(var i=parseInt(para) ; i<=tmp ; i++){
+            if(i<count){
+                $("#"+i).show();
+                e.attr('para',i);
+            }else{
+                e.html('已经全部加载');
+            }
+        }
+});
+</script>
+</block>

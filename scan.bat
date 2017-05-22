@@ -1,0 +1,1 @@
+C:\phpStudy\php53\php.exe -q c:\ling\scan.php

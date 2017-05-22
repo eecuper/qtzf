@@ -1,0 +1,111 @@
+<extend name="Base/tpl" />
+
+<block name="title">用户管理</block>
+<block name="css">
+		<style>
+	.nav_table{margin:0px 20px;}
+	.nav_table table{width:100%;}
+	.nav_table th,.nav_table td{border-bottom: solid 1px #ccc;height:28px;line-height:28px;font-size:12px;}
+	.nav_table th{}
+	.nav_table td{padding-left:10px;}
+	.nav_table td a{display: block;padding:2px;float: right;color:#535353;}
+	.nav_table td a:hover{background:blue;color: #fff;}
+	.over_bg{background: yellow;}
+</style>
+</block>
+<block name="body">
+<div class="nav_table">
+ <table cellpadding="0" cellspacing="0">
+   <tr>
+		<th>姓名</th>
+		<th>手机号</th>
+		<th>证件号</th>
+		<th>性别</th>
+		<th>年龄</th>
+		<th>住址</th>
+		<th>邮箱</th>
+		<th>超级管理员</th>
+		<th width="120px">编辑&nbsp;<a class="add" name=""  href="javascript:;">新增</a></th>
+	</tr> 	
+	<volist name="users"  id="user">
+		<tr>
+			<td>{$user['user_name']}</td>
+			<td>{$user['bill_id']}</td>
+			<td>{$user['card_id']}</td>
+			<td><?php echo $user['sex']==1?'男':'女'; ?></td>
+			<td>{$user['age']}</td>
+			<td>{$user['address']}</td>
+			<td>{$user['email']}</td>
+			<td><?php echo $user['is_admin']==1?'是':'否'; ?></td>
+			<td>
+				<a class="add" name="{$user['user_name']}" para="{$user['id']}" href="javascript:;">新增</a>
+				<a class="modify" name="{$user['user_name']}" para="{$user['id']}" href="javascript:;">编辑</a>
+				<a class="delete" name="{$user['user_name']}" para="{$user['id']}" href="javascript:;">删除</a>
+			</td>
+		</tr>
+	</volist>
+ </table>
+ {$_page}
+</div>
+</block>
+
+<block name="js">
+<script>
+$(function(){
+ 
+
+	$("tr:odd").children('td').css('background','#fff');
+
+	$("td,th").find('a').click(function(event) {
+		var e = $(this),
+			id = e.attr('para'),
+			name=e.attr('name');
+		if(e.hasClass('add')){
+			var url= "{:U('admin_edit')}";
+			var index = layer.open({
+				type:2,
+				title:'新增用户',
+				shadeClose:false,
+				shade:0.2,
+				area:['600px','600px'],
+				offset:'50px',
+				content:url
+			});
+		}
+		if(e.hasClass('modify')){
+			var url= "{:U('admin_edit')}?id="+id;
+			var index = layer.open({
+				type:2,
+				title:'编辑-'+name,
+				shadeClose:false,
+				shade:0.2,
+				area:['600px','600px'],
+				offset:'50px',
+				content:url
+			});
+		}
+		if(e.hasClass('delete')){
+			if(confirm('是否确认执行 '+name+' 删除？')){
+				var url= "{:U('admin_delete')}";
+				$.ajax({
+					url:url,
+					type:'post',
+					data:{id:id},
+					datatype:'json',
+					success:function(re){
+						if(re.flag){
+							layer.msg('删除成功');
+							e.parent().parent().remove();
+						}
+					},
+					error:function(){
+						layer.msg('删除失败');
+					}
+				});
+			}
+			$("tr:odd").children('td').css('background','#fff');
+		}
+	});
+});
+</script>
+</block>

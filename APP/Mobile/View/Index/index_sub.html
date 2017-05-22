@@ -1,0 +1,51 @@
+<extend name="Tmplate/tpl" />
+<block name="css">
+<link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+<link rel="stylesheet" href="__CSS__/qtzf.css"/>
+<link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+</block>
+ 
+<block name="body">
+<div id="listhome4">
+<div class="list">
+<div id="oldlist">
+    <ul>
+    <notempty name="navs">
+        <volist name="navs" id="nav" key="k">
+            <?php 
+                $link = "";
+                if($nav['url_type']=='link'){
+                    $link = U('index/newsList')."?nav_name=".$nav['name']."&url=".urlencode($nav['url']);
+                }else if($nav['url_type']=='local'){
+                    $link = $nav['url']."?nav_name=".$nav['name'];
+                }else if($nav['url_type']=='sub'){
+                    $link = U('index/sub_link?nav_name='.$nav['name'].'&pid='.$nav['id']);
+                }else if($nav['url_type']=='content'){
+                    $link = U('index/xieyiInfo?nav_name='.$nav['name'].'&id='.$nav['cid']);
+                }else if($nav['url_type']=='content_list'){
+                    $link = U('index/newsList_local?nav_name='.$nav['name'].'&id='.$nav['id']);
+                }
+            ?>
+            <li class="newsmore" id="{$k}">
+            <a class="lda" href="{$link}">
+            <div class="olditem">
+            <div class="title">
+                <span class="left"><img src="http://www.qingtian.gov.cn/images/qt2013_6.gif">
+                {$nav['name']}</span>
+                <em class="right" style="color:#ccc;">></em>
+            </div> 
+            </div>
+            </a></li>
+        </volist>
+    <else/>
+        <li class="newsmore"><a href="javascript:;">
+        <div class="olditem">
+        <div class="title">未找到任何数据</div> 
+        </div>
+        </a></li>
+    </notempty>   
+    </ul>
+</div>
+</div>
+</div>
+</block>

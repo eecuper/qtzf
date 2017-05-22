@@ -1,0 +1,106 @@
+<extend name="Base/tpl" />
+
+<block name="title">预约管理</block>
+<block name="css">
+		<style>
+	.nav_table{margin:0px 20px;}
+	.nav_table table{width:100%;}
+	.nav_table th,.nav_table td{border-bottom: solid 1px #ccc;height:28px;line-height:28px;font-size:12px;}
+	.nav_table th{}
+	.nav_table td{padding-left:10px;}
+	.nav_table td a{display: block;padding:2px;float: right;color:#535353;}
+	.nav_table td a:hover{background:blue;color: #fff;}
+	.over_bg{background: yellow;}
+</style>
+</block>
+<block name="body">
+<div class="nav_table">
+ <table cellpadding="0" cellspacing="0">
+   <tr>
+		<th>项目名称</th>
+		<th>用户名称</th>
+		<th>公司名称</th>
+		<th>预约日期</th>
+		<th>上/下午</th>
+		<th>开标室_评标室</th>
+		<th>预约备注</th>
+		<th width="120px">编辑</th>
+	</tr> 	
+	<volist name="yues"  id="yue">
+		<tr>
+			<td>{$yue['user_name']}</td>
+			<td>{$yue['bill_id']}</td>
+			<td>{$yue['comp_name']}</td>
+			<td>{$yue['yue_date']}</td>
+			<td>{$yue['yue_ap']}</td>
+			<td>{$yue['room']}</td>
+			<td>{$yue['remark']}</td>
+			<td width="120px">
+				<a class="delete" name="{$yue['user_name']}" para="{$yue['id']}" href="javascript:;">删除</a>
+			</td>
+		</tr>
+	</volist>
+ </table>
+ {$_page}
+</div>
+</block>
+
+<block name="js">
+<script>
+$(function(){
+
+	$("tr:odd").children('td').css('background','#fff');
+
+	$("td").find('a').click(function(event) {
+		var e = $(this),
+			id = e.attr('para'),
+			name=e.attr('name');
+		if(e.hasClass('add')){
+			var url= "{:U('user_edit')}";
+			var index = layer.open({
+				type:2,
+				title:'新增导航',
+				shadeClose:true,
+				shade:0.2,
+				area:['600px','600px'],
+				offset:'100px',
+				content:url
+			});
+		}
+		if(e.hasClass('modify')){
+			var url= "{:U('user_edit')}?id="+id;
+			var index = layer.open({
+				type:2,
+				title:'编辑-'+name,
+				shadeClose:true,
+				shade:0.2,
+				area:['600px','600px'],
+				offset:'100px',
+				content:url
+			});
+		}
+		if(e.hasClass('delete')){
+			if(confirm('是否确认执行 '+name+' 删除？')){
+				var url= "{:U('yue_delete')}";
+				$.ajax({
+					url:url,
+					type:'post',
+					data:{id:id},
+					datatype:'json',
+					success:function(re){
+						if(re.flag){
+							layer.msg('删除成功');
+							e.parent().parent().remove();
+						}
+					},
+					error:function(){
+						layer.msg('删除失败');
+					}
+				});
+			}
+			$("tr:odd").children('td').css('background','#fff');
+		}
+	});
+});
+</script>
+</block>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="gb2312">
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+	<title>{$nav_name}</title>
+</head>
+<body>
+<div class="nav hide">
+	<span class="left nav_span" onclick="history.back();">返回</span>
+	<span class="nav_title">{$name}</span>
+	<span class="right nav_span" onclick="location.href='{:U('index/index')}';">首页</span>
+</div>
+<div id="listhome4">
+<div class="list">
+<div id="oldlist">
+	<ul>
+	<notempty name="navs">
+		<volist name="navs" id="nav" key="k">
+			<li class="newsmore" id="{$k}"><a href="{:U('index/newsList')}?nav_name={$nav['name']}&url=<?php echo urlencode($nav['url'])?>">
+			<div class="olditem">
+			<div class="title"> {$nav['name']}
+				<em class="right" style="color:#ccc;">></em>
+			</div> 
+			</div>
+			</a></li>
+		</volist>
+	<else/>
+		<li class="newsmore"><a href="javascript:;">
+		<div class="olditem">
+		<div class="title">未找到任何数据</div> 
+		</div>
+		</a></li>
+	</notempty>	
+	</ul>
+</div>
+</div>
+</div> 
+</body>
+</html>

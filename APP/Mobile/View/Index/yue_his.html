@@ -1,0 +1,46 @@
+<extend name="Tmplate/tpl" />
+<block name="css">
+<link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+<link rel="stylesheet" href="__CSS__/qtzf.css"/>
+<link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+</block>
+ 
+<block name="body">
+<div id="listhome4">
+<div class="list">
+<div id="oldlist">
+    <ul>
+    <notempty name="yues">
+        <volist name="yues" id="yue" key="k">
+            <li class="newsmore" id="{$k}">
+            <a href="javascript:;">
+            <div class="olditem">
+            <div class="title">
+                <span class="left">
+                {$yue['bh']}
+                <br>
+                {$yue['comp_name']}<br>
+                {$yue['pro_name']} 
+                </span>
+                <em class="right" style="color:#ccc;">
+                <?php echo $yue['status']==1?'已预约':'<font style="color:red;">已弃用</font>'; ?>      
+                &nbsp;&nbsp;&nbsp;{$yue['yue_date']}</em>
+            </div> 
+            </div>
+            </a></li>
+        </volist>
+    <else/>
+        <li class="newsmore"><a href="javascript:;">
+        <div class="olditem">
+        <div class="title">未找到任何数据</div> 
+        </div>
+        </a></li>
+    </notempty>   
+    </ul>
+</div>
+</div>
+<br>
+{$_page}
+<br>
+</div>
+</block>

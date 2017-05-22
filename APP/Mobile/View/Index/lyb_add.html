@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="gb2312">
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+    <style type="text/css">
+    #oldlist{padding:10px 10px 10px 10px;}
+	#oldlist p{display:block;height:30px;padding:10px 0px;}
+	#oldlist p span{width:20%;padding-right:10px;}
+	input[type=text] ,input[type=date],select{height:40px;line-height: 40px;border-radius: 2px;width:100%;border:solid 1px #ccc;padding-left:15px;background: #fff;}
+	#oldlist p input[type=text]{}
+	.a_btn{display:block;height:30px;line-height:30px;background:rgb(160,213,103);border-radius: 2px;color: #fff;text-decoration: none;width:106%;margin:0 auto;padding:8px 0px;
+		text-align: center;font-weight: bold;}
+	.save_disable{background:#ccc;color: grey;cursor:not-allowed;}
+	.errmsg{font-size: 12px;color: red;text-align: center;}
+    </style>
+	<title>留言板</title>
+</head>
+<body>
+<div class="nav hide">
+	<span class="left nav_span" onclick="history.back();">返回</span>
+	<span class="nav_title">留言板</span>
+	<span class="right nav_span" onclick="location.href='{:U('index/index')}';">首页</span>
+</div>
+<div id="listhome4" style="padding-bottom:10px;">
+<div class="list">
+<div id="oldlist">
+<form name="theForm" action="{:U('index/lyb_add')}" method="post">
+<p><input placeholder="请填写姓名" type="text" name="user_name" /></p>
+<p><input placeholder="请填写手机" type="text" name="bill_id" /></p>
+<p><select name="type" id="" style="width:106%;">
+	<option value="建议">建议</option>
+	<option value="意见">意见</option>
+	<option value="投诉">投诉</option>
+</select></p>
+<p><input type="text" placeholder="请填写留言信息" name="text" /></p>
+<p style="text-align:center;">
+	<div class="errmsg"></div>
+	<a href="javascript:;" class="a_btn save_btn save">提交留言</a>
+</p>
+ 
+</form>
+</div>
+</div>
+</div>
+
+<script src="__STATIC__/jquery-1.5.1.js"></script>
+<script src="__PUBLIC__/stringUtil.js"></script>
+<script type="text/javascript">
+	var flag = 1;
+	
+	$(function(){
+		$(".save").live('click', function(event) {
+
+			var valid = true; 
+		 	$(".errmsg").html('');
+			var name=$("input[name=user_name]").val(),
+				bill=$("input[name=bill_id]").val(),
+				text=$("input[name=text]").val(),
+				e = $(this);
+				if(name.isEmpty()){
+					$("input[name=user_name]").val('').attr('placeholder','姓名必须填写');
+					valid=false;
+				}
+				if(name.getByteLength()>8){
+					$("input[name=user_name]").val('').attr('placeholder','姓名填写过长');
+					valid=false;
+				}
+				if(bill.isEmpty()){
+					$("input[name=bill_id]").val('').attr('placeholder','手机必须填写');
+					valid=false;
+				}
+
+				if(!bill.isEmpty() && !bill.isMobilePhone()){
+					$("input[name=bill_id]").val('').attr('placeholder','手机号格式错误');
+					valid=false;
+				}
+
+				if(text.isEmpty()){
+					$("input[name=text]").val('').attr('placeholder','留言信息必须填写');
+					valid=false;
+				}
+				
+				 
+				if(valid==true){
+					e.addClass('save_disable').removeClass('save').text('正在提交留言');
+					setTimeout(addSave,5000);
+					$.ajax({
+						url:"{:U('index/lyb_add')}",
+						type:'post',
+						datatype:'json',
+						data:$("form:eq(0)").serialize(),
+						success:function(re){
+							if(re.flag){
+								alert(re.msg);
+							}else{
+								$('.errmsg').html(re.msg);
+							}
+						},
+						error:function(){
+							$(".errmsg").html('留言失败');
+							addSave();
+						}
+					});
+				}
+		});
+	});
+
+	addSave = function(){
+		$(".save_btn").addClass('save').removeClass('save_disable').text('提交留言');
+	}
+</script>
+</body>
+</html
+

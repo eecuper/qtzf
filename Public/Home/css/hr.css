@@ -1,0 +1,101 @@
+*,html,body {
+ margin:0px;padding:0;border:none;font-size: 12px;
+}
+table{font-size: 12px;}
+h3{text-align: center; border: 1px solid #f0f6f9; font-size: 14px;}
+.line{padding-left: 100px;}
+.wrap {
+ width:980px; border: #b7c5d9 0px solid;background: #fff;align: center;margin:0 auto;
+}
+.a10 {
+ font-weight: bold; color: #0099cc;  text-decoration: none;
+}
+.a10:hover {
+ color: #bb2233; text-decoration: underline
+}
+.md-head {
+ padding-left: 0px; line-height: 40px; height: 40px
+}
+.md-head A {
+ border-top-width: 0px; border-left-width: 1px; float: left; border-bottom-width: 0px; margin-left: -1px; width: 140px; background-color: #fff; text-align: center; border-right-width: 0px
+}
+.md-head A.wid {
+ width: 135px
+}
+.md-head a.cur {
+  border-bottom-width: 0px; color: #000; background-color: #f0f6f9; text-decoration: none
+}
+.md-body {
+ padding:1px;zoom: 1
+}
+a,area { blr:e-xpression(this.onFocus=this.blur()) }
+:focus { -moz-outline-style: none; }
+.left{float:left;} .right{float:right;} .clear{clear:both;}
+
+/*个人信息*/
+#hr_info{width:980px;margin:0 auto;text-align:left;background-color: #fff;}
+.hr_info_title{background-color:rgb(15, 142, 226);color:#fff;font-weight: 600;border-bottom:0px;padding-left:5px;height: 30px;line-height: 30px;}
+.hr_info_title_l{background-color: rgb(245, 248, 252);;color:#0081cc;font-weight: 600;border-bottom:0px;padding-left:5px;height: 30px;line-height: 30px;}
+.model-con{float: left;margin-top: 10px; margin-left: 20px; }
+.model-cons{float: right;width: 800px; margin-top: 10px;}
+.model-list{line-height: 28px;margin-bottom:2px !important;}
+.model-list li{position:relative;list-style: none;float: left;width:230px;padding-left: 4px;margin-left: 18px;margin-bottom: 4px;color: #000;}
+.model-list .li{}
+.model-list .ls{color: #32cd32;font-weight:600;font-size: 20px;padding-top: 15px; width: 200px;}
+.col{color: red; font-size: 20px;}
+p{margin-left: 20px;margin-bottom: 10px;}
+.ran {text-align: center;margin:0 auto; margin-top: 10px; width: 100%;background-color:rgb(15, 142, 226); }
+.ran td{height: 30px;text-align: center;background: #fff;}
+.c td{border-bottom: 1px solid #ccc;height: 25px;}
+.tab{background:rgb(45, 45, 138) !important; color:#fff; }
+.line{text-align: center;margin:0 auto;}
+.note{color: red;}
+
+/*信息列表*/
+.rank{width:980px;background: #f0f6f9;margin-bottom: 20px;position: relative;}
+
+.rank tr{height:25px;}
+.rank th{height:20px;line-height: 20px;}
+.rank td{text-overflow:ellipsis;white-space: nowrap;border-collapse: collapse;padding-left:3px;height:20px;line-height: 20px;border-bottom:solid 1px #ccc;font-size: 12px;}
+.rank-title{color:#fff;font-weight: 600;padding-left:5px;padding-right:5px;height:20px;line-height: 20px;
+	font-size: 12px;background-color:rgb(15, 142, 226);
+	text-overflow: ellipsis;
+    white-space: nowrap;border:solid 1px #ccc; border-width:0px 1px 1px 0px;}
+.xq{position: relative;background-color: #f0f6f9;  width:996px; height: 350px; overflow:auto;}
+.fixed{
+    position: relative; 
+    left: expression(this.parentElement.offsetParent.parentElement.scrollLeft);
+    }
+.fixeds{
+    position: relative;
+    left: expression(this.parentElement.offsetParent.parentElement.scrollLeft);
+    background-color: #f0f6f9;
+    }
+.fixeds a{text-decoration: none;color: blue}
+
+.query{
+	background:rgb(240,246,249);
+	padding:10px 0px;
+	width: 996px;
+}
+.query-table{}
+.query-table span{padding-right:4px;width:55px;}
+.query-table input[type=text]{border:solid 1px #ccc;}
+.text{border:solid 1px #ccc;width:145px;}
+.query-table input[type=button]{border:solid 0px #ccc;}
+.query-table td{text-align: left;cursor: pointer;}
+.query-table span{width: 75px;display: inline-block;}
+.btn{border:solid 0px #ccc;cursor: pointer;}
+
+/*相关政策*/
+
+
+/*脚步*/
+.footer{clear:both;background: rgb(245, 248, 252) none repeat scroll 0 0;color: #000;margin: 0 auto;padding: 10px;text-align: center;width: 980px;margin-top: 50px;}
+.errMsg{padding:100px; text-align: center;font-weight: 600;font-size: 24px;color: #ccc;background:rgb(240,246,249);
+margin:0 auto;}
+
+/*分页*/
+.think_page{padding-top:10px;text-align: left;}
+.think_page .num,.next,.current,.prev{padding:2px 10px;border:solid 1px #ccc;font-size: 12px;text-decoration: none;background: #eee;color:#000;}
+.think_page .current{background: #fff;border-width: 0px;}

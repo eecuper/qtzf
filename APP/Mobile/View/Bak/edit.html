@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>编辑</title>
+	<style>
+		body{padding:0px;}
+		.error{background:infobackground !important;border-bottom:solid 1px red !important;}
+		.zton{background:#fff url("__PUBLIC__/images/zton.png");width:898px;height:495px;position:relative;}
+		.from_name{position:absolute;left:152px;top:117px;}
+		.from_name input{width:97px;height:23px;}
+		.from_sf{position:absolute;left:333px;top:115px;}
+		.from_sf input{width:94px;}
+		.from_address{position:absolute;left:140px;top:178px;}
+		.from_address input{width:286px;}
+		.from_bill{position:absolute;left:140px;top:245px;}
+		.from_bill input{width:286px;}
+		.to_name{position:absolute;left:528px;top:115px;}
+		.to_name input{width:103px;}
+		.to_md{position:absolute;left:716px;top:115px;}
+		.to_md input{width:96px;}
+		.to_address{position:absolute;left:519px;top:178px;}
+		.to_address input{width:291px;}
+		.to_bill{position:absolute;left:519px;top:245px;}
+		.to_bill input{width:291px;}
+		input[type=text]{height:22px;border:0px;background:rgb(193,218,249);font-weight:bold;font-size: 14px;font-family: 微软雅黑,黑体}
+	</style>
+	<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/stringUtil.js"></script>
+</head>
+<body>
+<div class="zton">
+	<form action="{:U('edit')}" name="theForm" method="post">
+	<input type="hidden" name="id" value="{$tk['id']}" />
+	<span class="from_name"><input type="text" name="from_name" value="{$tk['from_name']}" /></span>
+	<span class="from_sf"><input type="text" name="from_sf" value="{$tk['from_sf']}" ></span>
+	<span class="from_address"><input type="text" name="from_address" value="{$tk['from_address']}" ></span>
+	<span class="from_bill"><input type="text" name="from_bill" value="{$tk['from_bill']}" ></span>
+	<span class="to_name"><input type="text" name="to_name" value="{$tk['to_name']}" ></span>
+	<span class="to_md"><input type="text" name="to_md" value="{$tk['to_md']}" ></span>
+	<span class="to_address"><input type="text" name="to_address" value="{$tk['to_address']}" ></span>
+	<span class="to_bill"><input type="text" name="to_bill" value="{$tk['to_bill']}" ></span>
+	</form>
+</div>
+
+<div>
+  	<input type="button" value="保存" class="print">
+</div>
+
+<script>
+	$(".print").click(function(){
+		var from_name = $("input[name=from_name]").val(),
+			from_sf = $("input[name=from_sf]").val(),
+			from_address = $("input[name=from_address]").val(),
+			from_bill = $("input[name=from_bill]").val(),
+			to_name = $("input[name=to_name]").val(),
+			to_md = $("input[name=to_md]").val(),
+			to_address = $("input[name=to_address]").val(),
+			to_bill = $("input[name=to_bill]").val();
+		var flag = true;
+		$("input").removeClass('error');
+		if(to_bill.isEmpty()){
+			$("input[name=to_bill]").addClass('error');
+			$("input[name=to_bill]").focus();
+			flag=false;
+		}
+		if(to_address.isEmpty()){
+			$("input[name=to_address]").addClass('error');
+			$("input[name=to_address]").focus();
+			flag=false;
+		}
+		if(to_md.isEmpty()){
+			$("input[name=to_md]").addClass('error');
+			$("input[name=to_md]").focus();
+			flag=false;
+		}
+		if(to_name.isEmpty()){
+			$("input[name=to_name]").addClass('error');
+			$("input[name=to_name]").focus();
+			flag=false;
+		}
+		if(from_bill.isEmpty()){
+			$("input[name=from_bill]").addClass('error');
+			$("input[name=from_bill]").focus();
+			flag=false;
+		}
+		if(from_address.isEmpty()){
+			$("input[name=from_address]").addClass('error');
+			$("input[name=from_address]").focus();
+			flag=false;
+		}
+		if(from_sf.isEmpty()){
+			$("input[name=from_sf]").addClass('error');
+			$("input[name=from_sf]").focus();
+			flag=false;
+		}
+		if(from_name.isEmpty()){
+			$("input[name=from_name]").addClass('error');
+			$("input[name=from_name]").focus();
+			flag=false;
+		}
+		if(flag){
+			theForm.submit();
+		}
+	});
+</script>
+</body>
+</html>

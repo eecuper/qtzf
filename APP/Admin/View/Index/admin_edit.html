@@ -1,0 +1,125 @@
+<html>
+	<head>
+	<style>
+	p{width:90%;padding:0px 20px;border:solid 0px red;}
+	p span{display:inline-block;width:80px;padding-right:10px;text-align: right;}
+	p input{height:25px;width:220px;}
+	.save , .reset {width:80px;height:25px;line-height: 25px;border:0px;}
+	.radio{border:solid 1px #ccc;width:40px;}
+	select{width:220px;}
+	em{color: red;}
+	p .msg,.msg2{color:red;font-size:12px;display: inline-block;width:180px;float: right;text-align: left;border:solid 0px green;}
+	</style>
+	</head>
+	<body>
+	<form name="theForm" action="" method="post">
+	<input type="hidden" name="id" value="{$user['id']}" />	 
+	<p><span>姓名</span><input type="text" name="user_name" value="{$user['user_name']}" /><em>*</em><span class="msg"></span></p>
+	<p><span>手机</span><input type="text" name="bill_id" value="{$user['bill_id']}" /><em>*</em><span class="msg"></span></p>
+	<p><span>密码</span><input type="password" name="pwd" value=""/><em>*</em><span class="msg2">不填默认为不修改，新增默认123qwe</span></p>
+	<p><span></span>
+	管理员<input class="radio" type="radio" name="is_admin" value="2"  <?php if($user['is_admin']==2){ echo 'checked'; } ?>/>
+	超级管理员<input class="radio" type="radio" name="is_admin" value="1" <?php if($user['is_admin']==1){ echo 'checked'; } ?> /></p>
+	<p><span>证件号</span><input type="text" name="card_id" value="{$user['card_id']}"/><span class="msg"></span></p>
+	<p><span></span>男<input class="radio" type="radio" name="sex" value="1" checked="checked" />
+						女<input class="radio" type="radio" name="sex" value="0" /></p>
+	<p><span>年龄</span><input type="text" name="age" value="{$user['age']}"/><span class="msg"></span></p>
+	<p><span>地址</span><input type="text" name="address" value="{$user['address']}"/><span class="msg"></span></p>
+	<p><span>邮箱</span><input type="text" name="email" value="{$user['email']}"/><span class="msg"></span></p>
+	<p><span>备注</span><input type="text" name="remark" value="{$user['remark']}"/><span class="msg"></span></p>
+	<p><span></span>正常<input class="radio" type="radio" name="status" value="1" checked="checked" />
+						禁用<input class="radio" type="radio" name="status" value="0" /></p>
+	<p><span></span><input type="button" value="保存" class="save"/> <input class="reset" type="reset" value="重置"/></p>
+	</form>
+	</body>
+
+	<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/stringUtil.js"></script>
+	<script type="text/javascript">
+	$(".save").click(function(){
+
+		$(".msg").html('');
+
+		var user_name = $("input[name=user_name]").val(),
+			bill_id   = $("input[name=bill_id]").val(),
+			pwd       = $("input[name=pwd]").val(),
+			age       = $("input[name=age]").val(),
+			card_id   = $("input[name=card_id]").val(),
+			email     = $("input[name=email]").val(),
+			flag      = true;
+
+		if(user_name.isEmpty()){
+			$("input[name=user_name]").siblings('.msg').html('姓名必须填写');
+			flag=false;
+		}
+
+		if(user_name.getByteLength()>8){
+			$("input[name=user_name]").siblings('.msg').html('姓名填写内容过长');
+			flag=false;
+		}
+
+		if(bill_id.isEmpty()){
+			$("input[name=bill_id]").siblings('.msg').html('号码必须填写');
+			flag=false;
+		}
+
+		if(!bill_id.isMobilePhone()){
+			$("input[name=bill_id]").siblings('.msg').html('号码格式错误');
+			flag=false;
+		}
+
+		if(!(age.isEmpty())){
+			if(!(age.isInteger()) || age>120){
+				$("input[name=age]").siblings('.msg').html('年龄填写错误');
+				flag=false;
+			}
+		}
+
+		if(!(card_id.isEmpty())){
+			if(!(card_id.isIdCardNo())){
+				$("input[name=card_id]").siblings('.msg').html('身份证号填写错误');
+				flag=false;
+			}
+		}
+
+		if(!(email.isEmpty())){
+			if(!(email.isEmail())){
+				$("input[name=email]").siblings('.msg').html('邮箱填写错误');
+				flag=false;
+			}
+		}
+ 
+ 		if(flag==false){
+ 			return;
+ 		}
+
+ 		layer.load(2,{shade:[0.5,'#ccc']});
+		$.ajax({
+			url:"{:U('admin_edit')}",
+			type:'post',
+			datatype:'json',
+			data:$("form:eq(0)").serialize(),
+			success:function(re){
+				if(re.flag){
+					layer.msg('保存成功');	
+					setTimeout(function(){
+						layer.closeAll();
+					},1000);
+				}else{
+					layer.msg('保存失败');
+					setTimeout(function(){
+						layer.closeAll();
+					},1000);
+				}
+			},
+			error:function(){
+				layer.msg('保存异常');
+				setTimeout(function(){
+						layer.closeAll();
+					},1000);
+			}
+		});
+	});
+	</script>
+</html>

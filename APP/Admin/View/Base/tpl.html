@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<title><block name="title"></block></title>
+		<link rel="stylesheet" href="__CSS__/admin.css"/>
+		<style>
+		html,body,*{padding:0px;margin:0px;font-family: "Microsoft YaHei","宋体";
+			background: rgb(222,234,217);
+		    color: #535353;
+		    font-size: 12px;
+		  }
+		  /*background: url('http://qtzfcg.gov.cn/qtimg/cgzx/cg_bj.jpg');
+		    background-position: center center;
+		    background-repeat: repeat;*/
+		.wrap{position:absolute;width:100%;}
+		.banner{}
+		.nav{border-bottom: solid 10px rgb(123,184,193);overflow: hidden;width:100%;}
+		.nav ul{width:100%;margin-left: 30px;}
+		.nav ul li{list-style-type: none;margin-left:1px;list-style: none;float:left;width:7%;}
+		.nav ul li a{display: block;width:100%;height:25px;line-height:25px;text-align:center; color: #535353;text-decoration: none;font-size:14px;font-weight: bold;background:rgb(222,234,217);border-radius:5px 5px 0px 0px;}
+		.nav ul li .curr{background:rgb(123,184,193);color: #fff;}
+	
+		.msg_info{position: absolute;right:30px;top:50px;color:#535353;}
+		.think_page{padding-top:10px;text-align: center;}
+		.think_page .num,.next,.current,.prev{padding:2px 10px;border:solid 1px #ccc;font-size: 12px;text-decoration: none;background: #eee;color:#000;}
+		.think_page .current{background: #fff;border-width: 0px;}
+		.web_name{height:50px;line-height: 50px;padding-left:50px;}
+		.web_name h3{font-size:22px;color:rgb(123,184,193);letter-spacing:5px;}
+		.web_name ,.nav,h3,.msg_info,ul{background:#fff;}
+		td a{background: none;padding-right:5px !important;}
+		.nav_table{margin:0px 10px !important;}
+		.nav_table th{text-align: left;padding-left:20px;}
+
+		</style>
+		<block name="css"></block>
+	</head>
+
+	<body>
+		<div class="wrap">
+	 
+		<div class="web_name">
+			<h3>{$config['web_name']}</h3>
+		</div>
+		<div class="nav">
+			<ul>				 
+				<li><a class="<?php echo $m==3?'curr':''; ?>" href="{:U('admin?m=3')}">用户管理</a></li>
+				<li><a class="<?php echo ($m==4 || empty($m))?'curr':''; ?>" href="{:U('user?m=4')}">公司管理</a></li>
+				<li><a class="<?php echo $m==5?'curr':''; ?>" href="{:U('yuyue?m=5')}">场地预约</a></li>
+				<li><a class="<?php echo $m==51?'curr':''; ?>" href="{:U('yuyueb?m=51')}">编号预约</a></li>
+				<li><a class="<?php echo $m==6?'curr':''; ?>" href="{:U('lyb?m=6')}">留言板</a></li>
+					<if condition="$_SESSION['user_auth']['is_admin'] eq 1">
+						<li><a class="<?php echo $m==7?'curr':''; ?>" href="{:U('pro?m=7')}">协议供货</a></li>
+						<li><a class="<?php echo $m==2?'curr':''; ?>" href="{:U('nav?m=2')}">导航菜单</a></li>
+					</if>
+				<li  class="right"><a class="" href="{:U('index/loginOut')}">退出</a></li>
+			</ul>
+
+			<div class="msg_info">
+				你好！{$loginUser['user_name']}
+			</div>
+		</div>
+		<div class="clear"></div>
+		
+		<block name="body"></block>
+		</div>
+		<div class="foot"></div>
+	</body>
+	<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+	<block name="js"></block>
+</html>

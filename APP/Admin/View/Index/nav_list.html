@@ -1,0 +1,132 @@
+<html>
+	<head>
+		<title>导航配置</title>
+		<link rel="stylesheet" href="__CSS__/admin.css"/>
+		<style>
+	.nav_table{}
+	.nav_table table{width:100%;}
+	.nav_table th,.nav_table td{border-bottom: solid 1px #ccc;height:28px;line-height:28px;font-size:12px;}
+	.nav_table th{}
+	.nav_table td{padding-left:10px;}
+	.nav_table td a{display: block;padding:2px;float: right;color:#535353;}
+	.nav_table td a:hover{background:blue;color: #fff;}
+	.over_bg{background: yellow;}
+</style>
+	</head>
+<body>
+<div class="nav_table">
+ <table cellpadding="0" cellspacing="0">
+   <tr>
+		<th></th>
+		<th>名称</th>
+		<th width="100px">类型</th>
+		<th>地址</th>
+		<th width="60px">状态</th>
+		<th width="60px">图标</th>
+		<th width="120px">编辑&nbsp;<a class=" " name=""  href="{:U('index/nav_edit')}">新增</a></th>
+	</tr> 	
+	<?php $flag = 0; $f=1?>
+	<volist name="navs"  id="nav" key="k">
+		<tr>
+			<td>
+			<?php
+				if($nav['pid']==0){
+					echo $f;
+					$f++;
+				} 
+			?>	
+			</td>
+			<td>
+			<?php
+				echo str_repeat('&nbsp;&nbsp;', (intval($nav['lvl'])-1)*2).$nav['name'];
+			?>
+			</td>
+			<td>
+			<?php 
+				if($nav['url_type']=='local'){
+					echo '站点链接';
+				}else if($nav['url_type']=='link'){
+					echo '爬虫链接';
+				}else{
+					echo '层级链接';
+				}
+			?>
+			</td>
+			<td>{$nav['url']}</td>
+			<td><?php echo $nav['status']==1?'正常':'禁用'; ?></td>
+			<td>
+				<?php 
+					echo empty($nav['icon'])?'':'已上传';
+				?>
+			</td>
+			<td align="center" style="padding-right:10px;">
+				<a class="" name="{$nav['name']}" para="{$nav['id']}" href="{:U('index/nav_edit?parentId='.$nav['id'])}">新增</a>
+				<a class="" name="{$nav['name']}" para="{$nav['id']}" href="{:U('index/nav_edit?id='.$nav['id'])}">编辑</a>
+				<a class="delete" name="{$nav['name']}" para="{$nav['id']}" href="javascript:;">删除</a>
+			</td>
+		</tr>
+	</volist>
+ </table>
+</div> 
+<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+<script>
+$(function(){
+ 
+
+	$("tr:odd").children('td').css('background','#fff');
+
+	$("td , th").find('a').click(function(event) {
+		var e = $(this),
+			id = e.attr('para'),
+			name=e.attr('name');
+		if(e.hasClass('add')){
+			var url= "{:U('nav_edit')}?parentId="+id;
+			var index = layer.open({
+				type:2,
+				title:'新增导航',
+				shadeClose:false,
+				shade:0.2,
+				area:['600px','450px'],
+				offset:'100px',
+				content:url
+			});
+		}
+		if(e.hasClass('modify')){
+			var url= "{:U('nav_edit')}?id="+id;
+			var index = layer.open({
+				type:2,
+				title:'编辑-'+name,
+				shadeClose:false,
+				shade:0.2,
+				area:['600px','450px'],
+				offset:'100px',
+				content:url
+			});
+		}
+		if(e.hasClass('delete')){
+			if(confirm('是否确认执行 '+name+' 删除？')){
+				var url= "{:U('nav_delete')}";
+				$.ajax({
+					url:url,
+					type:'post',
+					data:{id:id},
+					datatype:'json',
+					success:function(re){
+						if(re.flag){
+							layer.msg('删除成功');
+							e.parent().parent().remove();
+						}
+					},
+					error:function(){
+						layer.msg('删除失败');
+					}
+				});
+			}
+			$("tr:odd").children('td').css('background','#fff');
+		}
+	});
+});
+</script>
+</body>
+</html>

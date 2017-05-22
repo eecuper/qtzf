@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>查询</title>
+	<style>
+	 .list{background:#ddd;}
+	 .list th,.list td{background:#fff;height:30px;line-height: 30px;padding-left: 5px;font-size: 13px;}
+	 .list th{background:rgb(81,114,116);color:#fff;font-size: 13px;}
+	 .top{padding:10px;}
+	</style>
+	<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+	<script type="text/javascript" src="__STATIC__/date/WdatePicker.js"></script>
+</head>
+<body>
+<div class="top">
+<form action="{:U('index/index')}" name="theForm" method="post">
+收件人:<input name="to_name" value="{$to_name}" type="text" class="" />
+收件人地址:<input name="to_address" value="{$to_address}" type="text" class="" />
+收件人电话:<input name="to_bill" value="{$to_bill}" type="text" class="" />
+起始时间:<input name="start_date" value="{$start_date}" type="text" class="Wdate" onClick="WdatePicker()" />
+截止时间:<input name="end_date" value="{$end_date}" type="text" class="Wdate" onClick="WdatePicker()"/>
+
+<input type="submit" value="查询" class="query">
+
+<input type="button" value="新增" class="add">
+</form>
+</div>
+
+<div style="text-align:right;padding-bottom:10px;">
+<div style="float:left;">
+<input type="button" value="打印" class="print">
+<div id="msg" style="text-align:center;"></div>
+</div>
+		{$_page}
+</div>
+
+<div>
+	<table class="list" width="100%" cellspacing="1" cellpadding="0" border=0>
+		<tr>
+		    <th><input type="checkbox" class="selectAll"></th>
+			<th>寄件人姓名</th>
+			<th>始发地</th>
+			<th>寄件人详细地址</th>
+			<th>电话</th>
+			<th>收件人姓名</th>
+			<th>目的地</th>
+			<th>收件人详细地址</th>
+			<th>电话</th>
+			<th>填写时间</th>
+			<th>是否打印</th>
+			<th>打印时间</th>
+			<th>操作</th>
+			<volist name="tasks" id="tsk">
+			<tr id="tsk{$tsk['id']}">
+				<td class="check"><input type="checkbox" value="{$tsk['id']}"></td>
+				<td>{$tsk['from_name']}</td>
+				<td>{$tsk['from_sf']}</td>
+				<td>{$tsk['from_address']}</td>
+				<td>{$tsk['from_bill']}</td>
+				<td class="to_name">{$tsk['to_name']}</td>
+				<td>{$tsk['to_md']}</td>
+				<td>{$tsk['to_address']}</td>
+				<td>{$tsk['to_bill']}</td>
+				<td>{$tsk['create_date']|date='Y-m-d',###}</td>
+				<td class="print_status">
+					<?php 
+						echo $tsk['print']==0?'否':'已打印';
+					?>
+				</td>
+				<td>
+					<?php 
+						echo $tsk['print_date']==''?'':date('Y-m-d',$tsk['print_date']);
+					?>
+				</td>
+				<td><a href="javascript:print('{$tsk['id']}');">打印</a>&nbsp;
+					<a href="{:U('index/priview?id='.$tsk['id'])}" target="_blank">查看</a>
+				</td>
+			</tr>
+			</volist>
+		</tr>
+	</table>
+	<div style="text-align:right;padding-top:10px;">
+		{$_page}
+	</div>
+	<?php 
+		$sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+        $php_self = $_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME'];
+        $path_info = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+        $relate_url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $php_self.(isset($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : $path_info);
+        $url =  $sys_protocal.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
+	?>
+</div>
+<script type="text/javascript" src="__STATIC__/lodop/LodopFuncs.js"></script>
+<script>
+	 var LODOP,P_ID,t,c=0; //声明为全局变量 
+	function print(id){
+		var url = "{$url}/zton/index/priview/id/"+id+".html";
+		var img = "__PUBLIC__/images/zton.png"
+		// var url = "http://localhost/zton/index/priview/id/4.html";
+		LODOP=getLodop();  
+		LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_按网址打印");
+		LODOP.ADD_PRINT_URL(30,20,746,"95%",url);
+		LODOP.SET_PRINT_STYLEA(0,"HOrient",3);
+		LODOP.SET_PRINT_STYLEA(0,"VOrient",3);
+		// LODOP.SET_SHOW_MODE("MESSAGE_GETING_URL",""); //该语句隐藏进度条或修改提示信息
+		// LODOP.SET_SHOW_MODE("MESSAGE_PARSING_URL","");//该语句隐藏进度条或修改提示信息
+		// LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='"+img+"'>");
+		// LODOP.SET_SHOW_MODE("PREVIEW_IN_BROWSE",1);
+		// LODOP.SET_SHOW_MODE("HIDE_PAPER_BOARD",1);
+		// LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",1);
+
+		// LODOP.PREVIEW();
+		// LODOP.PRINT(); 
+		LODOP.SET_PRINT_MODE("CATCH_PRINT_STATUS",true);
+		var status =LODOP.PRINTA();
+		// console.info('status :'+status);
+		// alert(status);
+	}
+
+	function print_update(obj,id){
+		$.ajax({
+			type:'post',
+			data:{id:id},
+			url:"{:U('print_id')}",
+			dataType:'json',
+			ansy:false,
+			success:function(re){
+				if(re.success){
+					obj.html('已打印');
+				}
+			},
+			error:function(){
+
+			}
+		});
+	}
+
+	$(function(){
+		// layer.msg('hello ');
+		$(".list tr:even").find('td').css('background','#eee');
+	});
+
+	$(".add").click(function(){
+		var url  = "{:U('edit')}";
+		var index = layer.open({
+							  type: 2,
+							  title: '快递信息',
+							  shadeClose: true,
+							  shade: 0.2,
+							  area: ['918px', '600px'],
+							  content: url
+							});
+	});
+
+	$(".selectAll").click(function(){
+		if('checked'==$(this).attr("checked")){
+			$(".check").find('input[type=checkbox]').attr('checked',true);
+		}else{
+			$(".check").find('input[type=checkbox]').attr('checked',false);
+		}
+	});
+
+ 
+	$(".print").click(function(){
+		var p = $(this);
+		var array= new Array();
+
+		var img = "__PUBLIC__/images/zton.png"
+		// var url = "http://localhost/zton/index/priview/id/4.html";
+		
+
+     	// 往数组添加数据：
+     	$(".check").each(function(){
+     		var td = $(this);
+     		var e = $(this).find('input[type=checkbox]').eq(0);
+     		if('checked'==e.attr('checked')){
+     			// array.push(e.val());
+     			// print(e.val());
+     			var to_name = td.parent().find(".to_name").eq(0).text();
+     			LODOP=getLodop();
+				LODOP.PRINT_INIT(to_name+"打印");
+				LODOP.SET_PRINT_STYLEA(0,"HOrient",3);
+				LODOP.SET_PRINT_STYLEA(0,"VOrient",3);
+				// LODOP.SET_SHOW_MODE("MESSAGE_GETING_URL",""); //该语句隐藏进度条或修改提示信息
+				// LODOP.SET_SHOW_MODE("MESSAGE_PARSING_URL","");//该语句隐藏进度条或修改提示信息
+				// LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='"+img+"'>");
+				// LODOP.SET_SHOW_MODE("PREVIEW_IN_BROWSE",1);
+				// LODOP.SET_SHOW_MODE("HIDE_PAPER_BOARD",1);
+				// LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",1);
+
+				// LODOP.PREVIEW();
+				// LODOP.PRINT(); 
+				LODOP.SET_PRINT_MODE("CATCH_PRINT_STATUS",true);
+				// var status =LODOP.PRINTA();
+     			var url = "{$url}/zton/index/priview/id/"+e.val()+".html";
+				LODOP.ADD_PRINT_URL(30,20,746,"95%",url);
+				var result = LODOP.PRINT();
+				P_ID = result;
+				// console.info(P_ID);
+				if (P_ID!="") {
+					c=0;
+					WaitFor(e.val());
+					//td.parent().find('.print_status').eq(0),e.val()
+				}
+
+		   //      if (result > 0) {
+		   //          //更新打印时间状态
+					// print_update(td.parent().find('.print_status').eq(0),e.val());
+					// window.close();
+		   //      }
+		   //      else {
+		   //      	td.parent().find('.print_status').eq(0).html('<font color=red>打印失败</font>');
+		   //          window.close();
+		   //      }
+     		}
+     	});
+	});
+
+	function WaitFor(id){     
+		c=c+1;    
+		obj = $("#tsk"+id).find(".print_status").eq(0);
+		obj.html("正在打印");
+		$("#msg").html("正等待(JOB代码是"+P_ID+")打印结果："+c+"秒");
+		t=setTimeout("WaitFor('"+id+"')",1000);
+		if (LODOP.GET_VALUE("PRINT_STATUS_OK",P_ID)) {
+			clearTimeout(t);
+			c=0;
+			print_update(obj,id);
+			//obj.html('<font color=green>打印成功</font>');
+		}if ((!LODOP.GET_VALUE("PRINT_STATUS_EXIST",P_ID))&&(c>0)) {
+			clearTimeout(t);
+			$("#msg").html("打印任务被删除！");
+			c=0;
+			obj.html('<font color=red>打印被删除</font>');
+		} else if (c>30){
+			clearTimeout(t);
+			$("#msg").html("打印超时(30秒)！");
+			c=0;
+			obj.html('<font color=red>打印超时</font>')
+		};
+	}
+</script>
+</body>
+</html>
+

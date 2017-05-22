@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="gb2312">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+    <link rel="stylesheet" href="__CSS__/qtzf.css"/>
+	<title>{:C('WEB_NAME')}</title>
+</head>
+<body>
+<div>
+<div class="head"><h2>{:C('WEB_NAME')}</h2></div>
+<div id="menu">
+	<div class="menu_title">
+		<fieldset>
+			<legend>中心首页</legend>
+		</fieldset>
+	</div>
+	<ul>
+	<li><a href="{:U('index/newsList')}?name=中心动态&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/zxdt/')?>">中心动态</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=本周开标&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/zxdt/bzkb/')?>">本周开标</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=征求意见&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/zfcg/zqyj/')?>">征求意见</a></li> 	
+	</ul>	
+	 
+
+	<div class="menu_title">
+		<fieldset>
+			<legend>政府采购</legend>
+		</fieldset>
+	</div>
+	<ul>
+	<li><a href="{:U('index/newsList')}?name=政府采购-采购动态&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/zfcg/cgdt/')?>">     采购动态</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=政府采购-招标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/zfcg/ggpt/zbgg/')?>">招标公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=政府采购-中标公示&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/zfcg/ggpt/zbgs/')?>">中标公示</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=政府采购-中标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/zfcg/ggpt/zbgg/')?>">中标公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=政府采购-废标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/zfcg/ggpt/fbgg/')?>">废标公告</a></li> 	
+	</ul>	
+	 
+
+	<div class="menu_title">
+		<fieldset>
+			<legend>工程建设</legend>
+		</fieldset>
+	</div>
+	<ul>
+	<li><a href="{:U('index/newsList')}?name=工程建设-采购动态&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gcjs/cgdt/')?>">     采购动态</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=工程建设-招标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gcjs/ggpt/zbgg/')?>">招标公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=工程建设-中标公示&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gcjs/ggpt/zbgs/')?>">中标公示</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=工程建设-中标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gcjs/ggpt/zb/')?>">  中标公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=工程建设-废标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gcjs/ggpt/qtgg/')?>">废标公告</a></li>
+	</ul>	
+	 
+
+	<div class="menu_title">
+		<fieldset>
+			<legend>土地资源</legend>
+		</fieldset>
+	</div>
+	<ul>
+	<li><a href="{:U('index/newsList')}?name=土地资源-拍卖动态&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/tdzy/pmdt/')?>">     拍卖动态</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=土地资源-拍卖公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/tdzy/ggpt/pmgg/')?>">拍卖公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=土地资源-成交公示&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/tdzy/ggpt/cjgs/')?>">成交公示</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=土地资源-成交公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/tdzy/ggpt/cjgg/')?>">成交公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=土地资源-流拍公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/tdzy/ggpt/lpgg/')?>">流拍公告</a></li> 	
+	</ul>	
+ 
+
+	<div class="menu_title">
+		<fieldset>
+			<legend>国有产权</legend>
+		</fieldset>
+	</div>
+	<ul>
+	<li><a href="{:U('index/newsList')}?name=国有产权-拍卖动态&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gycq/cgdt/')?>">     拍卖动态</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=国有产权-拍卖公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gycq/ggpt/pmgg/')?>">拍卖公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=国有产权-成交公示&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gycq/ggpt/cjgs/')?>">成交公示</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=国有产权-成交公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gycq/ggpt/cjgg/')?>">成交公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=国有产权-流拍公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/gycq/ggpt/lpgg/')?>">流拍公告</a></li> 	 	
+	</ul>	
+	 
+
+	<div class="menu_title">
+		<fieldset>
+			<legend>药物采购</legend>
+		</fieldset>
+	</div>
+	<ul>
+	<li><a href="{:U('index/newsList')}?name=药物采购-采购动态&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/xzzb/cgdt/')?>">     采购动态</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=药物采购-招标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/ypcg/ggpt/zbgg/')?>">招标公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=药物采购-中标公示&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/ypcg/ggpt/zbgs/')?>">中标公示</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=药物采购-中标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/ypcg/ggpt/zb/')?>">  中标公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=药物采购-其他公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/ypcg/ggpt/qtgg/')?>">其他公告</a></li> 	
+	</ul>	
+	 
+
+	<div class="menu_title">
+		<fieldset>
+			<legend>乡镇招标</legend>
+		</fieldset>
+	</div>
+	<ul>
+	<li><a href="{:U('index/newsList')}?name=乡镇招标-采购动态&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/xzzb/cgdt/')?>">     采购动态</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=乡镇招标-招标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/xzzb/ggpt/zbgg/')?>">招标公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=乡镇招标-中标公示&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/xzzb/ggpt/zbgs/')?>">中标公示</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=乡镇招标-中标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/xzzb/ggpt/zb/')?>">  中标公告</a></li> 	
+	<li><a href="{:U('index/newsList')}?name=乡镇招标-废标公告&url=<?php echo urlencode('http://www.qtzfcg.gov.cn/xzzb/ggpt/qtgg/')?>">废标公告</a></li> 	
+	</ul>	
+	 
+</div>
+</body>
+</html>

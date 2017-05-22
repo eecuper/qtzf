@@ -1,0 +1,130 @@
+<extend name="Base/tpl" />
+
+<block name="title">预约管理</block>
+<block name="css">
+		<style>
+	.nav_table{margin:0px 20px;}
+	.nav_table table{width:100%;}
+	.nav_table th,.nav_table td{border-bottom: solid 1px #ccc;height:28px;line-height:28px;font-size:12px;}
+	.nav_table th{}
+	.nav_table td{padding-left:10px;}
+	.nav_table td a{display: block;padding:2px;float: right;color:#535353;}
+	.nav_table td a:hover{background:blue;color: #fff;}
+	.over_bg{background: yellow;}
+</style>
+</block>
+<block name="body">
+
+
+<div class="nav_table" style="background:#fff;"> 
+<form name="queryForm" action="{:U('index/pro')}" method="post">
+ 类型:<select id="type_id" name="type_id">
+ 			<option value="">请选择制定类型</option>	
+			<volist name="navs" id="n" key="k">	
+				<?php 							 
+					$h='<option ';
+					$h.=' value="'.$n['id'].'" para="'.$n['lvl'].'"';
+					if($n['id']==$type_id){
+						$h.=' selected="selected"';
+					}
+					$h.='>';
+					$h.=str_repeat('-', (intval($n['lvl'])-1)*2).$n['name'];
+					$h.='</option>';
+					echo $h;
+				 
+				?>
+			</volist>
+		</select>
+ 标题:<input type="text" name="title" value="{$title}"/> <input type="submit" class="btn" value=" 查 找 "/>
+ <br>
+ </form>
+ <table cellpadding="0" cellspacing="0">
+   <tr>
+		<th>文章标题</th>
+		<th>类型</th>
+		<th>创建日期</th>
+		<th>生效日期</th>
+		<th>失效日期</th>
+		<th>编辑人</th>
+		<th>状态</th>
+		<th width="120px">编辑&nbsp;<a class="add" name=""  href="javascript:;">新增</a></th>
+	</tr> 	
+	<volist name="pros"  id="pro">
+		<tr>
+			<td>{$pro['id']}-{$pro['title']}</td>
+			<td>{$pro['type_name']}</td>
+			<td>{$pro['create_date']}</td>
+			<td>{$pro['valid_date']}</td>
+			<td>{$pro['expire_date']}</td>
+			<td>{$pro['user_name']}</td>
+			<td class="status"><?php echo $pro['status']==1?'正常':'<font style="color:red;">禁用</font>'; ?></td>
+			<td align="center">
+				<a class="add" name="{$pro['name']}" para="{$pro['id']}" href="javascript:;">新增</a>
+				<a class="modify" name="{$pro['name']}" para="{$pro['id']}" href="javascript:;">编辑</a>
+				<a class="delete" name="{$pro['name']}" para="{$pro['id']}" href="javascript:;">禁用</a>
+			</td>
+		</tr>
+	</volist>
+ </table>
+ {$_page}
+</div>
+</block>
+
+<block name="js">
+<script>
+$(function(){
+	$("tr:odd").children('td').css('background','#fff');
+
+	$("td , th").find('a').click(function(event) {
+		var e = $(this),
+			id = e.attr('para'),
+			name=e.attr('name');
+		if(e.hasClass('add')){
+			var url= "{:U('pro_edit')}";
+			var index = layer.open({
+				type:2,
+				title:'新增文章',
+				shadeClose:true,
+				shade:0.2,
+				area:['95%','95%'],
+				offset:'20px',
+				content:url
+			});
+		}
+		if(e.hasClass('modify')){
+			var url= "{:U('pro_edit')}?id="+id;
+			var index = layer.open({
+				type:2,
+				title:'编辑-'+name,
+				shadeClose:true,
+				shade:0.2,
+				area:['95%','95%'],
+				offset:'20px',
+				content:url
+			});
+		}
+		if(e.hasClass('delete')){
+			if(confirm('是否确认执行 '+name+' 删除？')){
+				var url= "{:U('pro_delete')}";
+				$.ajax({
+					url:url,
+					type:'post',
+					data:{id:id},
+					datatype:'json',
+					success:function(re){
+						if(re.flag){
+							layer.msg('禁用成功');
+							e.parent().siblings(".status").html("<font style='color:red;'>禁用</font>");
+						}
+					},
+					error:function(){
+						layer.msg('禁用失败');
+					}
+				});
+			}
+			$("tr:odd").children('td').css('background','#fff');
+		}
+	});
+});
+</script>
+</block>

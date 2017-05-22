@@ -1,0 +1,48 @@
+
+<style>
+	.nav_table table{width:100%;}
+	.nav_table th,.nav_table td{border-bottom: solid 1px #ccc;height:28px;line-height:28px;font-size:12px;}
+	.nav_table th{}
+	.nav_table td{padding-left:10px;}
+	.nav_table td a{display: block;color:#535353;}
+	.nav_table td a:hover{background:blue;color: #fff;}
+	.over_bg{background: yellow;}
+	.think_page{padding-top:10px;text-align: center;}
+		.think_page .num,.next,.current,.prev{padding:2px 10px;border:solid 1px #ccc;font-size: 12px;text-decoration: none;background: #eee;color:#000;}
+		.think_page .current{background: #fff;border-width: 0px;}
+</style>
+ 
+<div class="nav_table">
+ <form name="queryForm" action="{:U('index/pro_query')}" method="post">
+ 标题:<input type="text" name="title" /> <input type="submit" class="btn" value="查找"/>
+ </form>
+ <table cellpadding="0" cellspacing="0">
+   <tr>
+		<th width="438px">文章标题</th>		 
+		<th>创建日期</th>
+		<th>生效日期</th>
+		<th>失效日期</th>
+		<th>编辑人</th>
+	</tr> 	
+	<volist name="pros"  id="pro">
+		<tr>
+			<td><a class="linkId" href="javascript:;" para="{$pro['id']}">{$pro['id']}-{$pro['title']}</a></td>		 
+			<td>{$pro['create_date']}</td>
+			<td>{$pro['valid_date']}</td>
+			<td>{$pro['expire_date']}</td>
+			<td>{$pro['user_name']}</td>
+		</tr>
+	</volist>
+ </table>
+ {$_page}
+</div>
+ 
+<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script> 
+<script>
+$(function(){
+	$(".linkId").click(function(){
+		$("input[name=cid]",window.parent.document).val($(this).attr('para'));
+	});
+});
+</script>
+ 

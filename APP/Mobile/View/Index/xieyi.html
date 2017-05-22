@@ -1,0 +1,58 @@
+﻿<extend name="Tmplate/tpl" />
+<block name="css">
+<link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+<link rel="stylesheet" href="__CSS__/qtzf.css"/>
+<link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+<style type="text/css">
+  html , body{background: #fff;}
+  .xieyi{max-width:640px;margin:0 auto;background: #fff;border:solid 0px;overflow: hidden;padding-left:4%;padding-top:10px;}
+  .xieyi li{list-style: none;list-style-type: none;margin:2px;float:left;}
+  .xieyi li a{display:block;height:100%;height:85px;}
+  .x1{background: url('__PUBLIC__/images/xieyi/1.png') no-repeat scroll 0 0 / 100% 100%;}
+  .x2{background: url('__PUBLIC__/images/xieyi/2.png') no-repeat scroll 0 0 / 100% 100%;}
+
+  .x3{background: url('__PUBLIC__/images/xieyi/3.png') no-repeat scroll 0 0 / 100% 100%;}
+  .x4{background: url('__PUBLIC__/images/xieyi/4.png') no-repeat scroll 0 0 / 100% 100%;}
+  .x5{background: url('__PUBLIC__/images/xieyi/5.png') no-repeat scroll 0 0 / 100% 100%;}
+
+  .x6{background: url('__PUBLIC__/images/xieyi/6.png') no-repeat scroll 0 0 / 100% 100%;}
+  .x7{background: url('__PUBLIC__/images/xieyi/7.png') no-repeat scroll 0 0 / 100% 100%;}
+
+  .x8{background: url('__PUBLIC__/images/xieyi/8.png') no-repeat scroll 0 0 / 100% 100%;}
+  .x9{background: url('__PUBLIC__/images/xieyi/9.png') no-repeat scroll 0 0 / 100% 100%;}
+  .x10{background: url('__PUBLIC__/images/xieyi/10.png') no-repeat scroll 0 0 / 100% 100%;}
+
+  .x11{background: url('__PUBLIC__/images/xieyi/11.png') no-repeat scroll 0 0 / 100% 100%;}
+  .x12{background: url('__PUBLIC__/images/xieyi/12.png') no-repeat scroll 0 0 / 100% 100%;}
+
+  .li2{width:63%;}
+  .li1{width:31%;}
+
+  .content{background: #fff !important;}
+</style>
+</block>
+ 
+<block name="body"> 
+<div class="xieyi">
+  <ul>
+    <li class="li2"><a class="x1" href="javascript:;"></a></li>
+    <li  class="li1"><a class="lda x2" href="<?php echo U('index/newsList_local?nav_name=操作指南&id=103'); ?>"></a></li>
+
+    <li  class="li1"><a class="lda x3" href="<?php echo U('index/sub_link?nav_name=通用设备&pid=130'); ?>"></a></li>
+    <li  class="li1"><a class="lda x4" href="<?php echo U('index/sub_link?nav_name=办公家具&pid=92'); ?>"></a></li>
+    <li  class="li1"><a class="lda x5" href="{:U('index/xieyiInfo?id=183')}"></a></li>
+
+    <li  class="li1"><a class="x6" href="javascript:;"></a></li>
+    <li  class="li2"><a class="lda x7" href="{:U('index/xieyiInfo?id=54')}"></a></li>
+
+    <li  class="li1"><a class="lda x8" href="{:U('index/xieyiInfo?id=55')}"></a></li>
+    <li  class="li1"><a class="lda x9" href="<?php echo U('index/newsList_local?nav_name=杭州公务住宿&id=99'); ?>"></a></li>
+    <li  class="li1"><a class="lda x10" href="<?php echo U('index/newsList_local?nav_name=丽水公务住宿&id=97'); ?>"></a></li>
+
+    <li  class="li1"><a class="lda x11" href="{:U('index/xieyiInfo?id=48')}" ></a></li>
+    <li  class="li2"><a class="x12" href="javascript:;"></a></li>
+  </ul>
+</div>
+</block>
+ 
+  

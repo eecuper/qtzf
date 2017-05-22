@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta name="viewport" content="width=device-width, initial-scale=0.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="stylesheet" type="text/css" href="__JS__/style.css" />   
+  <title>青田县政府采购招标网</title> 
+   <block name="css"></block>
+  <style type="text/css">
+  .list_ul{display: none;}
+  </style>
+  <script language="javascript" src="__JS__/zepto.js"></script> 
+  <script language="javascript" src="__JS__/fx.js"></script> 
+  <script language="javascript" src="__JS__/cnvpgmu.js"></script> 
+  <script language="javascript" src="__JS__/cnvpwap.js"></script> 
+</head>
+<body class="loading">
+<div class="container">
+<div class="load amn3"><div class="loader amn"></div></div>
+<div class="header amn3 pull"><a href="javascript:;" class="icon menuback"></a><b>{$nav_name}</b><a href="{:U('index/index')}" class="icon homeback lda"></a></div>
+<div class="content amn3 pull"><div class="content-area about">
+<block name="body"></block>
+</div></div>
+<div class="menu amn3 pull">
+<a href="javascript:;" class="yi curr"><span></span><h2>政府采购</h2></a> 
+  <ul class="er curr">
+   <li><a href='<?php echo U('index/newsList')."?nav_name=征求意见&url=".urlencode("http://www.qtzfcg.gov.cn/zfcg/cgdt/"); ?>' class="lda"><b class="icon"></b><span>征求意见</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=招标公告&url=".urlencode("http://www.qtzfcg.gov.cn/zfcg/ggpt/zbgg/"); ?>' class="lda"><b class="icon"></b><span>招标公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=中标公告&url=".urlencode("http://www.qtzfcg.gov.cn/zfcg/ggpt/zb/"); ?>' class="lda"><b class="icon"></b><span>中标公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=废标公告&url=".urlencode("http://www.qtzfcg.gov.cn/zfcg/ggpt/fbgg/"); ?>' class="lda"><b class="icon"></b><span>废标公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=政策法规&url=".urlencode("http://www.qtzfcg.gov.cn/zfcg/zcfg/shj/"); ?>' class="lda"><b class="icon"></b><span>政策法规</span></a></li>
+  </ul> 
+  <a href="javascript:;" class="yi"><span></span><h2>工程建设</h2></a> 
+  <ul class="er" style="display:none;">
+   <li><a href='<?php echo U('index/newsList')."?nav_name=招标公告&url=".urlencode("http://www.qtzfcg.gov.cn/gcjs/ggpt/zbgg/"); ?>' class="lda"><b class="icon"></b><span>招标公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=中标公告&url=".urlencode("http://www.qtzfcg.gov.cn/gcjs/ggpt/zb/"); ?>' class="lda"><b class="icon"></b><span>中标公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name==中标公示&url=".urlencode("http://www.qtzfcg.gov.cn/gcjs/ggpt/zbgs/"); ?>' class="lda"><b class="icon"></b><span>中标公示</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=政策法规&url=".urlencode("http://www.qtzfcg.gov.cn/gcjs/zcfg/shj/"); ?>' class="lda"><b class="icon"></b><span>政策法规</span></a></li>
+  </ul> 
+  <a href="javascript:;" class="yi"><span></span><h2>国有产权</h2></a>
+  <ul class="er" style="display:none;">
+   <li><a href='<?php echo U('index/newsList')."?nav_name=交易公告&url=".urlencode("http://www.qtzfcg.gov.cn/gycq/ggpt/pmgg/"); ?>' class="lda"><b class="icon"></b><span>交易公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=成交公告&url=".urlencode("http://www.qtzfcg.gov.cn/gycq/ggpt/cjgs/"); ?>' class="lda"><b class="icon"></b><span>成交公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=废标公告&url=".urlencode("http://www.qtzfcg.gov.cn/gycq/ggpt/lpgg/"); ?>' class="lda"><b class="icon"></b><span>废标公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=政策法规&url=".urlencode("http://www.qtzfcg.gov.cn/gycq/zcfg/gjj/"); ?>' class="lda"><b class="icon"></b><span>政策法规</span></a></li>
+  </ul>
+  <a href="javascript:;" class="yi"><span></span><h1></h1><h2>土地矿产</h2></a> 
+  <ul class="er" style="display:none;">
+   <li><a href='<?php echo U('index/newsList')."?nav_name=交易公告&url=".urlencode("http://www.qtzfcg.gov.cn/tdzy/ggpt/pmgg/"); ?>'  class="lda"><b class="icon"></b><span>交易公告</span></a></li>   
+   <li><a href='<?php echo U('index/newsList')."?nav_name=成交公告&url=".urlencode("http://www.qtzfcg.gov.cn/tdzy/ggpt/cjgg/"); ?>'  class="lda"><b class="icon"></b><span>成交公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=废标公告&url=".urlencode("http://www.qtzfcg.gov.cn/tdzy/ggpt/lpgg/"); ?>'  class="lda"><b class="icon"></b><span>废标公告</span></a></li>
+   <li><a href='<?php echo U('index/newsList')."?nav_name=政策法规&url=".urlencode("http://www.qtzfcg.gov.cn/tdzy/zcfg/gjj/"); ?>'  class="lda"><b class="icon"></b><span>政策法规</span></a></li>
+  
+  </ul>
+   
+  <h4><img src="__PUBLIC__/images/logo.png" alt="" width="100%"/></h4>
+</div>
+<script type="text/javascript" src="__STATIC__/jquery-1.8.3.min.js"></script>
+<script type="application/javascript"> 
+$(".yi").click(function(){
+	var e = $(this),
+		flag = e.hasClass('curr');
+	$('.yi').removeClass('curr');
+	$(".er").removeClass('curr').hide();
+	if(flag){
+		e.removeClass('curr');
+		e.next('ul').removeClass('curr').slideUp(2000)
+	}else{
+		e.addClass('curr');
+		e.next('ul').addClass('curr').slideDown(2000);
+	}
+});
+</script>
+<block name="js"></block>
+<div class="mask amn3"></div>
+</div>
+</body></html>

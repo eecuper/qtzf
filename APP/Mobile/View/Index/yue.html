@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="gb2312">
+        <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+        <link rel="stylesheet" href="__CSS__/mobile_global.css"/>
+        <link rel="stylesheet" href="__CSS__/qtzf.css"/>
+        <link rel="stylesheet" href="__CSS__/qtzf_list.css"/>
+        <link rel="stylesheet" href="__PUBLIC__/stringUtil.js"/>
+        <title>预约</title>
+        <style>
+
+            *{ margin:0; padding: 0;}
+
+            .data-con{ position: relative; margin: 0px auto; width: 100%; border-right: 1px #d9d9d9 solid;border-bottom: 1px #d9d9d9 solid;}
+
+            .data-header, .select-tit{ background-color: rgb(160,213,103); color: #fff; line-height: 40px;}
+            
+            .prev-mon , .next-mon{padding: 0px 20px;}
+            .prev-mon{ width: 20px; float: left; font-size: 16px; text-align: center; cursor: pointer;}
+
+            .next-mon{ width: 20px; float: right; font-size: 16px; text-align:center; cursor: pointer;}
+
+            .current-mon{ text-align: center;}
+
+            .data-con table{ width: 100%;}
+
+            .data-con th{border-left: 1px #d9d9d9 solid; border-bottom: 1px #d9d9d9 solid; line-height: 30px;}
+
+            .data-con td{ height: 40px;line-height: 40px; width:14%; text-align: center; border-top: 1px #d9d9d9 solid; border-left: 1px #d9d9d9 solid; color: #1800cc;}
+            .data-con td:hover, .data-con td.hover{cursor: pointer;}
+
+            .data-con td.disable{ color: #999; background-color: #fff;}
+
+            .data-con td.disable:hover{ background-color:#fff; color: #999; cursor:default;}
+
+
+
+
+
+            .select-box{position: absolute; top: 0; right: -250px; width: 240px; border:1px #d9d9d9 solid;}
+
+            .select-box li{ list-style: none; padding: 10px; border-bottom: 1px #d9d9d9 solid;}
+
+            .day-time{ display: inline-block; border:1px #4e84ff solid;text-align: center; line-height: 25px;}
+
+            .weekday{ border-top: 1px #4e84ff solid; background-color: #4e84ff; color: #fff;}
+
+            .select{ display: inline-block; float: right;}
+
+            .select div{ display: inline-block;}
+
+            .select-btn{ padding: 3px 5px; margin-top: 15px;}
+
+
+
+            .select-tit{ text-align: center;}
+
+            .select-box .close{ width: 20px; height: 20px; float: right; border:1px #fff solid; border-radius: 50%; line-height: 22px; margin-top: 9px; margin-right: 10px; cursor: pointer; }
+
+            .am,.pm{font-size:12px;padding-top:25px;color:#000;}
+            .am{width:50%;float:left;background:#fff;}
+            .pm{width:50%;float:right;background:#fff;}
+            td {position: relative;}
+            td .tt{position: absolute;z-index:1000;font-size: 18px;font-weight: bold;margin:0 auto;color:#000;}
+
+            .data-con td.current{ background-color:#fff; color: #fff;}
+            .data-con td.current .am,.data-con td.current .pm{color:red;}
+
+            .data-xiang{top:85px;left:1%;border:solid 1px #ccc;border-top:solid 5px #ccc;border-bottom:solid 5px #ccc;border-radius: 5px;width:98%;min-height:270px;
+                background:#fff;position: absolute;z-index: 9999;padding-top:10px;}
+
+            .xiang-am , .xiang-pm{width:98%;height:130px;margin-left:1%}
+            .xiang-am p , .xiang-pm p{padding:5px 20px;}
+            .xiang-am p label,.xiang-pm p label{display:inline-block;width:20%;padding-right:10px;text-align: right;}
+
+        </style>
+
+    </head>
+
+
+
+    <body>
+        <div class="nav hide">
+            <span class="left nav_span" onclick="history.back();">返回</span>
+            <span class="nav_title">预约</span>
+            <span class="right nav_span" onclick="location.href='{:U('index/index')}';">首页</span>
+        </div>
+       <div class="data-con" id="data-con"></div> 
+
+       <div class="data-xiang" id="data-xiang" style="display:none;">
+        <div class="xiang-am">
+            <p class="date"></p>
+            <p class="address"></p>
+            <p class="comp_name"></p>
+            <p class="content"></p>
+        </div>
+
+        <div class="xiang-pm">
+            <p class="date"></p>
+            <p class="address"></p>
+            <p class="comp_name"></p>
+            <p class="content"></p>
+        </div>
+
+       </div>
+       提示：被标记红色背景部分表示已经被预约
+
+
+ 
+       <div id="listhome4" class="hide" style="width:100%;position:absolute;z-index:99999999999999;margin:0 auto;top:0px;">        
+        <div class="list">
+        <div id="oldlist">
+            <ul>
+            <li class="newsmore"><a href="javascript:;">
+                <div class="olditem">
+                <div class="title">数据加载中..</div> 
+                </div>
+                </a>
+            </li>   
+            </ul>
+
+        <div style="text-align:center;padding:10px;margin-top:10px;"><span class="close_div" style="padding:5px 20px;border:solid 1px #ccc;background:#fff;">关闭</span></div>
+        </div>
+        </div>
+
+        
+
+        </div>
+
+
+        <script src="__STATIC__/jquery-1.10.2.min.js"></script>
+        <script src="__STATIC__/date.js"></script>
+
+        <script type="text/javascript">
+        empty = function(str){
+            if(str==undefined) return true;
+            if(str=='undefined') return true;
+            if(str==null) return true;
+            if(str.trim()=='') return true;
+            return false;
+        }
+
+        $(function(){
+            $(".close_div").click(function(){
+                $("#listhome4").hide();
+            });
+            $("td").click(function(){
+                var e = $(this),
+                   val= e.attr('val');
+                   console.info('val : '+val);
+                if(!empty(val)){
+                    $("#listhome4").show();
+                    var m = '<li class="newsmore"><a href="javascript:;">';
+                        m+= '    <div class="olditem">';
+                        m+= '    <div class="title">数据加载中..</div> ';
+                        m+= '    </div>';
+                        m+= '    </a>';
+                        m+= '</li>';
+                    $("#oldlist ul").html(m);
+                    $.ajax({
+                    type:'post',
+                    dataType:'json',
+                    url:"{:U('yue_list')}",
+                    data:{yue_date:val},
+                    success:function(res){
+                        // var m = '<li class="newsmore"><a href="javascript:;">';
+                        //     m+= '    <div class="olditem">';
+                        //     m+= '    <div class="title">数据加载中..</div> ';
+                        //     m+= '    </div>';
+                        //     m+= '    </a>';
+                        //     m+= '</li>';
+                        $("#oldlist ul").html('');
+                        $.each(res,function(index,re){
+                            var h = "<li class='newsmore' id=''>";
+                                h+= "    <a class='lda' href='javascript:;'>";
+                                h+= "    <div class='olditem'>";
+                                h+= "    <div class='title'>";
+                                h+= "        <span class='left' style='max-width:300px;word-break:break-all;'> ";
+                                h+= "        "+re.yue_date+"("+re.yue_wu+")"+re.room+","+re.room2+"<br>"+re.comp_name+"<br>"+re.user_name+"</span>";
+                                h+= "        <em class='right' style='color:#ccc;'></em>";
+                                h+= "    </div> ";
+                                h+= "    </div>";
+                                h+= "    </a>";
+                                h+= "</li>";
+                            $("#oldlist ul").append(h);
+                        });
+                    },error:function(){
+                        $("#oldlist").find('.title').val('数据加载错误，请重试');
+                    }
+                });
+                }
+                //     am= e.find('.am').eq(0),
+                //     pm= e.find('.pm').eq(0);
+                // var amc = am.attr('para'),
+                //     pmc = pm.attr('para');
+                // var xam = $(".xiang-am").eq(0);
+                //     xpm = $(".xiang-pm").eq(0);
+                // console.info(e.html);
+                // $("#data-xiang").hide();
+                // $('#data-xiang .date').html('');
+                // $('#data-xiang .comp_name').html('');
+                // $('#data-xiang .address').html('');
+                // $('#data-xiang .content').html('');
+                // if(amc!=undefined){                    
+                //     var a = $.parseJSON(amc);
+                //     $("#data-xiang").show();
+                //     xam.find('.date:eq(0)').html(a.yue_date+' / 上午 <font color="red">已经预约</font>');
+                //     xam.find('.comp_name:eq(0)').html(a.comp_name);
+                //     xam.find('.address:eq(0)').html(a.room);
+                //     xam.find('.content:eq(0)').html(a.remark);
+                // }
+                // if(pmc!=undefined){
+                //     var p = $.parseJSON(pmc);
+                //     $("#data-xiang").show();
+                //     xpm.find('.date:eq(0)').html(p.yue_date+' / 下午 <font color="red">已经预约</font>');
+                //     xpm.find('.comp_name:eq(0)').html(p.comp_name);
+                //     xpm.find('.address:eq(0)').html(p.room);
+                //     xpm.find('.content:eq(0)').html(p.remark);
+                // }
+            });
+        });
+        </script>
+
+        <script type="text/javascript">
+            var text  = [{
+                year:2016,
+                mon:12,
+                d:3,
+                ap:'am'
+            },{
+                year:2016,
+                mon:12,
+                d:19,
+                ap:'pm' 
+            },{
+                year:2017,
+                mon:1,
+                d:5,
+                ap:'am'
+            }];
+
+            $(function(){
+                 apm();
+                 mark();
+            });
+
+
+            var marks = {$marks};
+
+            // $(".prev_mon , .next_mon").click(function(){
+            // apm();
+            // mark();
+            // });
+
+
+            apm  = function(){
+                $("td").each(function(index, el) {
+                    var e = $(this),
+                        t = e.text();                
+                        if(!(t=='' || t==null)){
+                            var hh="";
+                            if(e.hasClass('current')){
+                                hh = "<span class='tt' style='color:green;'>"+t+"</span><span class='am'>&nbsp;</span><span class='pm'>&nbsp;</span>";
+                            }else{
+                                hh = "<span class='tt'>"+t+"</span><span class='am'>&nbsp;</span><span class='pm'>&nbsp;</span>";
+                            }
+                            e.html(hh);
+                        }      
+                 });
+            }
+
+            //标识是否已经预约
+            mark = function(){
+                var aTd = $("#data-con").find('td');
+                $(aTd).attr('val','');
+                
+                $.each(marks,function(index, el) {
+                    var y = el.year,
+                        m  = el.mon,
+                        d  = el.d,
+                        t  = el.ap,
+                        year = $(".year").text(),
+                        mon  = $(".month").text();
+                        // console.info('y: '+y+'m: '+m+'d: '+d+'t: '+t+'year: '+year+'mon: '+mon);
+                        if(year==y){
+                            if(mon==m){
+                                $("td").each(function(index, el2){
+                                    var e = $(this),
+                                        h = e.attr('para');
+                                        if(h==d){
+                                            if(t=='am'){
+                                                e.children('.'+t).css({
+                                                    'background-color':'red',
+                                                    'color':'#fff'
+                                                }).text('上午');
+                                                e.children('.'+t).attr('para',el.content);
+                                                var con = $.parseJSON(el.content);
+                                                e.attr('val',con.yue_date);
+                                            }else{
+                                                e.children('.'+t).css({
+                                                    'background-color':'red',
+                                                    'color':'#fff'
+                                                }).text('下午');
+                                                e.children('.'+t).attr('para',el.content);
+                                                var con = $.parseJSON(el.content);
+                                                e.attr('val',con.yue_date);
+                                            }
+                                        }
+                                });
+                            }
+                        }
+                });
+                
+            }
+        </script>
+    </body>
+
+</html>
+

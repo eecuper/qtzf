@@ -1,0 +1,101 @@
+<extend name="Base/tpl" />
+
+<block name="title">留言管理</block>
+<block name="css">
+		<style>
+	.nav_table{margin:0px 20px;}
+	.nav_table table{width:100%;}
+	.nav_table th,.nav_table td{border-bottom: solid 1px #ccc;height:28px;line-height:28px;font-size:12px;}
+	.nav_table th{}
+	.nav_table td{padding-left:10px;}
+	.nav_table td a{display: block;padding:2px;float: right;color:#535353;}
+	.nav_table td a:hover{background:blue;color: #fff;}
+	.over_bg{background: yellow;}
+</style>
+</block>
+<block name="body">
+<div class="nav_table">
+ <table cellpadding="0" cellspacing="0">
+   <tr>
+		<th>姓名</th>
+		<th>手机号</th>
+		<th>留言时间</th>
+		<th>类型</th>
+		<th>留言</th>		 
+		<th width="120px">编辑&nbsp;</th>
+	</tr> 	
+	<volist name="lys"  id="ly">
+		<tr>
+			<td>{$ly['user_name']}</td>
+			<td>{$ly['bill_id']}</td>
+			<td>{$ly['create_date']|date='Y-m-d',###}</td>
+			<td>{$ly['type']}</td>
+			<td>{$ly['text']}</td>
+			<td>
+				<a class="delete" name="{$ly['user_name']}" para="{$ly['id']}" href="javascript:;">删除</a>
+			</td>
+		</tr>
+	</volist>
+ </table>
+ {$_page}
+</div>
+</block>
+
+<block name="js">
+<script>
+$(function(){
+	$("tr:odd").children('td').css('background','#fff');
+
+	$("td,th").find('a').click(function(event) {
+		var e = $(this),
+			id = e.attr('para'),
+			name=e.attr('name');
+		if(e.hasClass('add')){
+			var url= "{:U('user_edit')}";
+			var index = layer.open({
+				type:2,
+				title:'新增导航',
+				shadeClose:false,
+				shade:0.2,
+				area:['600px','600px'],
+				offset:'50px',
+				content:url
+			});
+		}
+		if(e.hasClass('modify')){
+			var url= "{:U('user_edit')}?id="+id;
+			var index = layer.open({
+				type:2,
+				title:'编辑-'+name,
+				shadeClose:false,
+				shade:0.2,
+				area:['600px','600px'],
+				offset:'50px',
+				content:url
+			});
+		}
+		if(e.hasClass('delete')){
+			if(confirm('是否确认执行 '+name+' 删除？')){
+				var url= "{:U('lyb_delete')}";
+				$.ajax({
+					url:url,
+					type:'post',
+					data:{id:id},
+					datatype:'json',
+					success:function(re){
+						if(re.flag){
+							layer.msg('删除成功');
+							e.parent().parent().remove();
+						}
+					},
+					error:function(){
+						layer.msg('删除失败');
+					}
+				});
+			}
+			$("tr:odd").children('td').css('background','#fff');
+		}
+	});
+});
+</script>
+</block>
